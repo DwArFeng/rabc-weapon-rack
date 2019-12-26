@@ -352,6 +352,21 @@
                 <artifactId>rabc-weapon-rack-stack</artifactId>
                 <version>alpha-0.0.1.a-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>rabc-weapon-rack-sdk</artifactId>
+                <version>alpha-0.0.1.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>rabc-weapon-rack-impl</artifactId>
+                <version>alpha-0.0.1.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>rabc-weapon-rack-node-dubbo</artifactId>
+                <version>alpha-0.0.1.a-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -380,5 +395,9 @@
     <modules>
         <module>rabc-weapon-rack-stack</module>
         <module>rabc-weapon-rack-sdk</module>
+        <module>rabc-weapon-rack-impl</module>
+        <module>rabc-weapon-rack-node</module>
+        <module>rabc-weapon-rack-api</module>
+        <module>rabc-weapon-rack-node-dubbo</module>
     </modules>
 </project>

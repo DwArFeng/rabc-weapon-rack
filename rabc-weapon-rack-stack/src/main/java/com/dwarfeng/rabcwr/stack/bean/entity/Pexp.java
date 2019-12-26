@@ -1,34 +1,44 @@
 package com.dwarfeng.rabcwr.stack.bean.entity;
 
-import com.dwarfeng.rabcwr.stack.bean.key.UuidKey;
+import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 
 /**
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class Pexp implements Entity<UuidKey> {
+public class Pexp implements Entity<GuidKey> {
 
     private static final long serialVersionUID = 8790319865873105566L;
 
-    private UuidKey key;
+    private GuidKey key;
+    private String content;
     private String remark;
 
     public Pexp() {
     }
 
-    public Pexp(UuidKey key, String remark) {
+    public Pexp(GuidKey key, String content, String remark) {
         this.key = key;
+        this.content = content;
         this.remark = remark;
     }
 
     @Override
-    public UuidKey getKey() {
+    public GuidKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(UuidKey key) {
+    public void setKey(GuidKey key) {
         this.key = key;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getRemark() {
@@ -43,6 +53,7 @@ public class Pexp implements Entity<UuidKey> {
     public String toString() {
         return "Pexp{" +
                 "key=" + key +
+                ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

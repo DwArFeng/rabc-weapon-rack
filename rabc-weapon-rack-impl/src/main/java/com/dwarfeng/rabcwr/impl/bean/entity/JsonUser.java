@@ -1,42 +1,37 @@
-package com.dwarfeng.rabcwr.stack.bean.entity;
+package com.dwarfeng.rabcwr.impl.bean.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.rabcwr.impl.bean.key.JsonIdKey;
 
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
+import java.io.Serializable;
 
-/**
- * 用户。
- *
- * @author DwArFeng
- * @since 0.0.1-alpha
- */
-public class User implements Entity<IdKey> {
+public class JsonUser implements Serializable {
 
-    private static final long serialVersionUID = -7166808835407200393L;
+    private static final long serialVersionUID = -2412108889516251526L;
 
-    private IdKey key;
+    @JSONField(name = "key", ordinal = 1)
+    private JsonIdKey key;
+
+    @JSONField(name = "name", ordinal = 2)
     private String name;
+
+    @JSONField(name = "password", ordinal = 3)
     private String password;
+
+    @JSONField(name = "enabled", ordinal = 4)
     private String enabled;
+
+    @JSONField(name = "remark", ordinal = 5)
     private String remark;
 
-    public User() {
+    public JsonUser() {
     }
 
-    public User(IdKey key, String name, String password, String enabled, String remark) {
-        this.key = key;
-        this.name = name;
-        this.password = password;
-        this.enabled = enabled;
-        this.remark = remark;
-    }
-
-    @Override
-    public IdKey getKey() {
+    public JsonIdKey getKey() {
         return key;
     }
 
-    @Override
-    public void setKey(IdKey key) {
+    public void setKey(JsonIdKey key) {
         this.key = key;
     }
 
@@ -74,9 +69,9 @@ public class User implements Entity<IdKey> {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "JsonUser{" +
                 "key=" + key +
-                ", name=" + name +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled='" + enabled + '\'' +
                 ", remark='" + remark + '\'' +

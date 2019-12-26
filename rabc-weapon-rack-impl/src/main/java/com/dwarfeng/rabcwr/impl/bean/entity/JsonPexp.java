@@ -1,31 +1,29 @@
-package com.dwarfeng.rabcwr.stack.bean.entity;
+package com.dwarfeng.rabcwr.impl.bean.entity;
 
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.rabcwr.impl.bean.key.JsonGuidKey;
 
-public class Permission implements Entity<GuidKey> {
+import java.io.Serializable;
 
-    private static final long serialVersionUID = -1534203776335886L;
+public class JsonPexp implements Serializable {
 
-    private GuidKey key;
+    @JSONField(name = "key", ordinal = 1)
+    private JsonGuidKey key;
+
+    @JSONField(name = "content", ordinal = 2)
     private String content;
+
+    @JSONField(name = "remark", ordinal = 3)
     private String remark;
 
-    public Permission() {
+    public JsonPexp() {
     }
 
-    public Permission(GuidKey key, String content, String remark) {
-        this.key = key;
-        this.content = content;
-        this.remark = remark;
-    }
-
-    @Override
-    public GuidKey getKey() {
+    public JsonGuidKey getKey() {
         return key;
     }
 
-    @Override
-    public void setKey(GuidKey key) {
+    public void setKey(JsonGuidKey key) {
         this.key = key;
     }
 
@@ -47,7 +45,7 @@ public class Permission implements Entity<GuidKey> {
 
     @Override
     public String toString() {
-        return "Permission{" +
+        return "JsonPexp{" +
                 "key=" + key +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

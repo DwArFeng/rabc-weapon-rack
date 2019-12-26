@@ -1,30 +1,30 @@
-package com.dwarfeng.rabcwr.stack.bean.entity;
+package com.dwarfeng.rabcwr.impl.bean.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 
-public class Permission implements Entity<GuidKey> {
+import java.io.Serializable;
 
-    private static final long serialVersionUID = -1534203776335886L;
+public class JsonPermission implements Serializable {
 
+    private static final long serialVersionUID = -1611452886001308613L;
+
+    @JSONField(name = "key", ordinal = 1)
     private GuidKey key;
+
+    @JSONField(name = "content", ordinal = 2)
     private String content;
+
+    @JSONField(name = "remark", ordinal = 3)
     private String remark;
 
-    public Permission() {
+    public JsonPermission() {
     }
 
-    public Permission(GuidKey key, String content, String remark) {
-        this.key = key;
-        this.content = content;
-        this.remark = remark;
-    }
-
-    @Override
     public GuidKey getKey() {
         return key;
     }
 
-    @Override
     public void setKey(GuidKey key) {
         this.key = key;
     }
@@ -47,7 +47,7 @@ public class Permission implements Entity<GuidKey> {
 
     @Override
     public String toString() {
-        return "Permission{" +
+        return "JsonPermission{" +
                 "key=" + key +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +
