@@ -1,9 +1,9 @@
 package com.dwarfeng.rabcwr.impl.dao;
 
-import com.dwarfeng.rabcwr.impl.bean.entity.HibernateUser;
+import com.dwarfeng.rabcwr.impl.bean.entity.HibernateRole;
 import com.dwarfeng.rabcwr.impl.bean.key.HibernateIdKey;
 import com.dwarfeng.rabcwr.sdk.interceptor.TimeAnalyse;
-import com.dwarfeng.rabcwr.stack.bean.entity.User;
+import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
 import com.dwarfeng.rabcwr.stack.exception.DaoException;
 import org.dozer.Mapper;
@@ -20,9 +20,9 @@ import java.util.Objects;
 
 @Component
 @Validated
-public class UserDaoDelegate {
+public class RoleDaoDelegate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoDelegate.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RoleDaoDelegate.class);
 
     @Autowired
     private HibernateTemplate template;
@@ -41,21 +41,21 @@ public class UserDaoDelegate {
 
     private boolean internalExists(IdKey key) {
         HibernateIdKey hibernateIdKey = mapper.map(key, HibernateIdKey.class);
-        return Objects.nonNull(template.get(HibernateUser.class, hibernateIdKey));
+        return Objects.nonNull(template.get(HibernateRole.class, hibernateIdKey));
     }
 
     @TimeAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public User get(IdKey key) throws DaoException {
+    public Role get(IdKey key) throws DaoException {
         try {
             if (!internalExists(key)) {
-                LOGGER.warn("指定的User " + key.toString() + " 不存在, 将抛出异常...");
+                LOGGER.warn("指定的Role " + key.toString() + " 不存在, 将抛出异常...");
                 throw new IllegalArgumentException("指定的IdKey " + key.toString() + " 不存在");
             }
 
             HibernateIdKey hibernateIdKey = mapper.map(key, HibernateIdKey.class);
-            HibernateUser hibernateUser = template.get(HibernateUser.class, hibernateIdKey);
-            return mapper.map(hibernateUser, User.class);
+            HibernateRole hibernateRole = template.get(HibernateRole.class, hibernateIdKey);
+            return mapper.map(hibernateRole, Role.class);
         } catch (Exception e) {
             throw new DaoException("数据访问发生异常", e);
         }
@@ -63,17 +63,17 @@ public class UserDaoDelegate {
 
     @TimeAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public IdKey insert(@NotNull User user) throws DaoException {
+    public IdKey insert(@NotNull Role role) throws DaoException {
         try {
-            if (internalExists(user.getKey())) {
-                LOGGER.warn("指定的User " + user.toString() + " 已经存在, 将抛出异常...");
-                throw new IllegalArgumentException("指定的User " + user.toString() + " 已经存在");
+            if (internalExists(role.getKey())) {
+                LOGGER.warn("指定的Role " + role.toString() + " 已经存在, 将抛出异常...");
+                throw new IllegalArgumentException("指定的Role " + role.toString() + " 已经存在");
             }
 
-            HibernateUser hibernateUser = mapper.map(user, HibernateUser.class);
-            template.save(hibernateUser);
+            HibernateRole hibernateRole = mapper.map(role, HibernateRole.class);
+            template.save(hibernateRole);
             template.flush();
-            return user.getKey();
+            return role.getKey();
         } catch (Exception e) {
             throw new DaoException("数据访问发生异常", e);
         }
@@ -81,20 +81,20 @@ public class UserDaoDelegate {
 
     @TimeAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public IdKey update(@NotNull User user) throws DaoException {
+    public IdKey update(@NotNull Role role) throws DaoException {
         try {
-            if (!internalExists(user.getKey())) {
-                LOGGER.warn("指定的User " + user.toString() + " 不存在, 将抛出异常...");
-                throw new IllegalArgumentException("指定的User " + user.toString() + " 不存在");
+            if (!internalExists(role.getKey())) {
+                LOGGER.warn("指定的Role " + role.toString() + " 不存在, 将抛出异常...");
+                throw new IllegalArgumentException("指定的Role " + role.toString() + " 不存在");
             }
 
-            HibernateIdKey hibernateIdKey = mapper.map(user.getKey(), HibernateIdKey.class);
-            HibernateUser hibernateUser = template.get(HibernateUser.class, hibernateIdKey);
-            assert hibernateUser != null;
-            mapper.map(user, hibernateUser);
-            template.update(hibernateUser);
+            HibernateIdKey hibernateIdKey = mapper.map(role.getKey(), HibernateIdKey.class);
+            HibernateRole hibernateRole = template.get(HibernateRole.class, hibernateIdKey);
+            assert hibernateRole != null;
+            mapper.map(role, hibernateRole);
+            template.update(hibernateRole);
             template.flush();
-            return user.getKey();
+            return role.getKey();
         } catch (Exception e) {
             throw new DaoException("数据访问发生异常", e);
         }
@@ -105,14 +105,14 @@ public class UserDaoDelegate {
     public void delete(@NotNull IdKey key) throws DaoException {
         try {
             if (!internalExists(key)) {
-                LOGGER.warn("指定的User " + key.toString() + " 不存在, 将抛出异常...");
+                LOGGER.warn("指定的Role " + key.toString() + " 不存在, 将抛出异常...");
                 throw new IllegalArgumentException("指定的IdKey " + key.toString() + " 不存在");
             }
 
             HibernateIdKey hibernateIdKey = mapper.map(key, HibernateIdKey.class);
-            HibernateUser hibernateUser = template.get(HibernateUser.class, hibernateIdKey);
-            assert hibernateUser != null;
-            template.delete(hibernateUser);
+            HibernateRole hibernateRole = template.get(HibernateRole.class, hibernateIdKey);
+            assert hibernateRole != null;
+            template.delete(hibernateRole);
             template.flush();
         } catch (Exception e) {
             throw new DaoException("数据访问发生异常", e);

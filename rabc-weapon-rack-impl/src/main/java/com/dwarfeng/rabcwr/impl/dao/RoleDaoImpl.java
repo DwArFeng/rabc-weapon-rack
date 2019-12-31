@@ -1,17 +1,17 @@
 package com.dwarfeng.rabcwr.impl.dao;
 
-import com.dwarfeng.rabcwr.stack.bean.entity.User;
+import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
-import com.dwarfeng.rabcwr.stack.dao.UserDao;
+import com.dwarfeng.rabcwr.stack.dao.RoleDao;
 import com.dwarfeng.rabcwr.stack.exception.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class RoleDaoImpl implements RoleDao {
 
     @Autowired
-    private UserDaoDelegate delegate;
+    private RoleDaoDelegate delegate;
 
     @Override
     public boolean exists(IdKey key) throws DaoException {
@@ -19,18 +19,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User get(IdKey key) throws DaoException {
+    public Role get(IdKey key) throws DaoException {
         return delegate.get(key);
     }
 
     @Override
-    public IdKey insert(User user) throws DaoException {
-        return delegate.insert(user);
+    public IdKey insert(Role role) throws DaoException {
+        return delegate.insert(role);
     }
 
     @Override
-    public IdKey update(User user) throws DaoException {
-        return delegate.update(user);
+    public IdKey update(Role role) throws DaoException {
+        return delegate.update(role);
     }
 
     @Override
