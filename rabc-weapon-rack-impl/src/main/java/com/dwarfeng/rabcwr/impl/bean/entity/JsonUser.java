@@ -19,7 +19,7 @@ public class JsonUser implements Serializable {
     private String password;
 
     @JSONField(name = "enabled", ordinal = 4)
-    private String enabled;
+    private boolean enabled;
 
     @JSONField(name = "remark", ordinal = 5)
     private String remark;
@@ -51,11 +51,11 @@ public class JsonUser implements Serializable {
         this.password = password;
     }
 
-    public String getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

@@ -16,13 +16,13 @@ public class User implements Entity<IdKey> {
     private IdKey key;
     private String name;
     private String password;
-    private String enabled;
+    private boolean enabled;
     private String remark;
 
     public User() {
     }
 
-    public User(IdKey key, String name, String password, String enabled, String remark) {
+    public User(IdKey key, String name, String password, boolean enabled, String remark) {
         this.key = key;
         this.name = name;
         this.password = password;
@@ -56,11 +56,11 @@ public class User implements Entity<IdKey> {
         this.password = password;
     }
 
-    public String getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
