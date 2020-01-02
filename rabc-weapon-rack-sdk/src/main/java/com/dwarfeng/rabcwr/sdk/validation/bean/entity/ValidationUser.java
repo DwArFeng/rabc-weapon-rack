@@ -14,7 +14,7 @@ public class ValidationUser implements Serializable {
 
     private static final long serialVersionUID = 3983362857686103011L;
 
-    @NotNull(groups = {Default.class})
+    @NotNull(groups = {Default.class, Insert.class})
     @Valid
     private ValidationIdKey key;
 
