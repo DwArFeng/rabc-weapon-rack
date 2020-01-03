@@ -10,11 +10,11 @@
         <version>alpha-0.0.1.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>rabc-weapon-rack-node</artifactId>
     <name>rabc-weapon-rack-node</name>
     <url>http://maven.apache.org</url>
-
-    <packaging>pom</packaging>
 
     <properties>
         <!-- 进行工程编码声明 -->
@@ -23,4 +23,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <modules>
+        <module>rabc-weapon-rack-node-dubbo</module>
+    </modules>
 </project>

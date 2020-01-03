@@ -14,6 +14,8 @@ import java.util.Set;
 @Table(name = "tbl_role")
 public class HibernateRole implements Serializable {
 
+    private static final long serialVersionUID = -178166498064464971L;
+
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", length = Constraints.LENGTH_ID, nullable = false, unique = true)
@@ -26,6 +28,10 @@ public class HibernateRole implements Serializable {
     @Column(name = "remark", length = Constraints.LENGTH_REMARK, nullable = true)
     private String remark;
 
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePexp.class, mappedBy = "role")
+    private Set<HibernatePexp> pexps = new HashSet<>();
+
     // -----------------------------------------------------------多对多-----------------------------------------------------------
     @ManyToMany(targetEntity = HibernateUser.class)
     @JoinTable(name = "tbl_user_has_role", joinColumns = { //
@@ -34,14 +40,6 @@ public class HibernateRole implements Serializable {
             @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false),//
     })
     private Set<HibernateUser> users = new HashSet<>();
-
-    @ManyToMany(targetEntity = HibernatePexp.class)
-    @JoinTable(name = "tbl_pexp_has_role", joinColumns = { //
-            @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)//
-    }, inverseJoinColumns = { //
-            @JoinColumn(name = "pexp_id", referencedColumnName = "id", insertable = false, updatable = false)//
-    })
-    private Set<HibernatePexp> pexps = new HashSet<>();
 
     public HibernateRole() {
     }
@@ -78,20 +76,20 @@ public class HibernateRole implements Serializable {
         this.remark = remark;
     }
 
-    public Set<HibernateUser> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<HibernateUser> users) {
-        this.users = users;
-    }
-
     public Set<HibernatePexp> getPexps() {
         return pexps;
     }
 
     public void setPexps(Set<HibernatePexp> pexps) {
         this.pexps = pexps;
+    }
+
+    public Set<HibernateUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<HibernateUser> users) {
+        this.users = users;
     }
 
     @Override

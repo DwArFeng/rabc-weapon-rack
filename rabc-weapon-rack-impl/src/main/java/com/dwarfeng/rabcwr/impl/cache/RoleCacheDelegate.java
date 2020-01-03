@@ -28,7 +28,7 @@ public class RoleCacheDelegate {
     @Autowired
     private Mapper mapper;
     @Autowired
-    @Qualifier("guidKeyFormatter")
+    @Qualifier("idKeyFormatter")
     private Formatter<IdKey> formatter;
 
     @Value("${cache.prefix.entity.role}")

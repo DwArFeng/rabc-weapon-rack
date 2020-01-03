@@ -52,9 +52,11 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-# /flight-data-recorder-impl/flight-data-recorder-impl-dao-hnh/logs/
+/rabc-weapon-rack-node/rabc-weapon-rack-node-dubbo/logs/
+/rabc-weapon-rack-api/rabc-weapon-rack-api-dubbo/logs/
 
 #################
 ## Configuration Files
 #################
-# /flight-data-recorder-impl/flight-data-recorder-impl-dao-hnh/conf/
+/rabc-weapon-rack-node/rabc-weapon-rack-node-dubbo/conf/
+/rabc-weapon-rack-api/rabc-weapon-rack-api-dubbo/conf/

@@ -27,14 +27,10 @@ public final class ServiceExceptionCodes {
      * 数据访问层异常。
      */
     public static final ServiceException.Code DAO_FAILED = new ServiceException.Code(101, "dao failed");
-//    /**
-//     * 过滤器构造失败。
-//     */
-//    public static final ServiceException.Code FILTER_MAKE_FAILED = new ServiceException.Code(102, "filter make failed");
-//    /**
-//     * 触发器构造失败。
-//     */
-//    public static final ServiceException.Code TRIGGER_MAKE_FAILED = new ServiceException.Code(103, "trigger make failed");
+    /**
+     * 参数验证失败。
+     */
+    public static final ServiceException.Code PARAM_VALIDATION_FAILED = new ServiceException.Code(130, "param validation failed");
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");
