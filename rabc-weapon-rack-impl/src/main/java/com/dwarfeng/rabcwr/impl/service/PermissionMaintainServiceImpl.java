@@ -1,6 +1,5 @@
 package com.dwarfeng.rabcwr.impl.service;
 
-import com.dwarfeng.rabcwr.sdk.crud.PermissionCrudHelper;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 import com.dwarfeng.rabcwr.stack.exception.ServiceException;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class PermissionMaintainServiceImpl implements PermissionMaintainService {
 
     @Autowired
-    private PermissionCrudHelper delegate;
+    private PermissionMaintainServiceDelegate delegate;
 
     @Override
     public Permission get(GuidKey key) throws ServiceException {

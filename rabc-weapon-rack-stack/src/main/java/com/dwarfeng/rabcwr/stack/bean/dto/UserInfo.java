@@ -1,21 +1,21 @@
 package com.dwarfeng.rabcwr.stack.bean.dto;
 
-public class RegisterInfo implements Dto {
+public class UserInfo implements Dto {
 
-    private static final long serialVersionUID = 3823420735812131351L;
+    private static final long serialVersionUID = -7247213260626039980L;
 
     private String id;
     private String name;
-    private String password;
+    private boolean enabled;
     private String remark;
 
-    public RegisterInfo() {
+    public UserInfo() {
     }
 
-    public RegisterInfo(String id, String name, String password, String remark) {
+    public UserInfo(String id, String name, boolean enabled, String remark) {
         this.id = id;
         this.name = name;
-        this.password = password;
+        this.enabled = enabled;
         this.remark = remark;
     }
 
@@ -35,12 +35,12 @@ public class RegisterInfo implements Dto {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getRemark() {
@@ -53,10 +53,10 @@ public class RegisterInfo implements Dto {
 
     @Override
     public String toString() {
-        return "RegisterInfo{" +
+        return "UserInfo{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';
     }

@@ -114,8 +114,7 @@ public class RoleCrudHelper {
             LOGGER.debug("指定的键 " + key.toString() + " 不存在，无法删除...");
             throw new IllegalStateException("指定的键 " + key.toString() + " 不存在，无法删除...");
         } else {
-            LOGGER.debug("清除实体 " + key.toString() + " 对应的子项缓存...");
-            LOGGER.debug("将指定的Role从缓存中删除...");
+            LOGGER.debug("清除实体 " + key.toString() + " 对应的缓存...");
             roleCache.delete(key);
             LOGGER.debug("将指定的Role从数据访问层中删除...");
             roleDao.delete(key);

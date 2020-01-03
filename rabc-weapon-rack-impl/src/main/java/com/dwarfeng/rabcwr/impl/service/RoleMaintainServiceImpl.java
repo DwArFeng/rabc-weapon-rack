@@ -1,6 +1,5 @@
 package com.dwarfeng.rabcwr.impl.service;
 
-import com.dwarfeng.rabcwr.sdk.crud.RoleCrudHelper;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
 import com.dwarfeng.rabcwr.stack.exception.ServiceException;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Autowired
-    private RoleCrudHelper delegate;
+    private RoleMaintainServiceDelegate delegate;
 
     @Override
     public Role get(IdKey key) throws ServiceException {

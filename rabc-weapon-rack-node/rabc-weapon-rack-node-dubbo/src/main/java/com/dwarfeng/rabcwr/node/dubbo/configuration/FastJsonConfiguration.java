@@ -16,20 +16,11 @@ public class FastJsonConfiguration {
 
     public FastJsonConfiguration() {
         LOGGER.info("正在配置 FastJson autotype 白名单");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisCategory");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisPoint");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisFilterInfo");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisTriggerInfo");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisFilteredValue");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisPersistenceValue");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisRealtimeValue");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.cache.redis.bean.entity.RedisTriggeredValue");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.handler.fnt.struct.StructuredFilterInfo");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.handler.fnt.struct.StructuredTriggerInfo");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.handler.fnt.preset.BlankConfig");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.handler.fnt.preset.IntegerFilter.Config");
-        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.fdr.impl.handler.fnt.preset.IntegerRangeTrigger.Config");
-
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.impl.bean.entity.JsonUser");
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.impl.bean.entity.JsonRole");
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.impl.bean.entity.JsonPexp");
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.impl.bean.entity.JsonPermission");
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.impl.bean.entity.JsonLoginState");
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }

@@ -1,6 +1,5 @@
 package com.dwarfeng.rabcwr.impl.service;
 
-import com.dwarfeng.rabcwr.sdk.crud.PexpCrudHelper;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 import com.dwarfeng.rabcwr.stack.exception.ServiceException;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Autowired
-    private PexpCrudHelper delegate;
+    private PexpMaintainServiceDelegate delegate;
 
     @Override
     public Pexp get(GuidKey key) throws ServiceException {

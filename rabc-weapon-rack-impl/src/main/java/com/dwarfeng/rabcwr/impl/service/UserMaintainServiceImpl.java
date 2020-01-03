@@ -1,6 +1,5 @@
 package com.dwarfeng.rabcwr.impl.service;
 
-import com.dwarfeng.rabcwr.sdk.crud.UserCrudHelper;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
 import com.dwarfeng.rabcwr.stack.exception.ServiceException;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserMaintainServiceImpl implements UserMaintainService {
 
     @Autowired
-    private UserCrudHelper delegate;
+    private UserMaintainServiceDelegate delegate;
 
     @Override
     public User get(IdKey key) throws ServiceException {
