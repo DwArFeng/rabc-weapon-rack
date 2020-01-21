@@ -1,8 +1,8 @@
 package com.dwarfeng.rabcwr.sdk.validation.bean.entity;
 
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
-import com.dwarfeng.rabcwr.sdk.validation.bean.key.ValidationGuidKey;
-import com.dwarfeng.rabcwr.sdk.validation.group.Insert;
+import com.dwarfeng.rabcwr.sdk.validation.bean.key.ValidationStringIdKey;
+import com.dwarfeng.subgrade.sdk.validation.group.Insert;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
@@ -13,10 +13,10 @@ import java.io.Serializable;
 public class ValidationPexp implements Serializable {
 
     private static final long serialVersionUID = 4426538851002379937L;
-    
+
     @NotNull(groups = {Default.class})
     @Valid
-    private ValidationGuidKey key;
+    private ValidationStringIdKey key;
 
     @NotNull(groups = {Default.class, Insert.class})
     @Length(max = Constraints.LENGTH_CONTENT, groups = {Default.class, Insert.class})
@@ -28,11 +28,11 @@ public class ValidationPexp implements Serializable {
     public ValidationPexp() {
     }
 
-    public ValidationGuidKey getKey() {
+    public ValidationStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(ValidationGuidKey key) {
+    public void setKey(ValidationStringIdKey key) {
         this.key = key;
     }
 

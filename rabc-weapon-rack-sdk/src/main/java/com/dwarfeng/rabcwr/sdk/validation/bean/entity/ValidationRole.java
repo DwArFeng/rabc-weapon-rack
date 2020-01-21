@@ -1,8 +1,8 @@
 package com.dwarfeng.rabcwr.sdk.validation.bean.entity;
 
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
-import com.dwarfeng.rabcwr.sdk.validation.bean.key.ValidationIdKey;
-import com.dwarfeng.rabcwr.sdk.validation.group.Insert;
+import com.dwarfeng.rabcwr.sdk.validation.bean.key.ValidationLongIdKey;
+import com.dwarfeng.subgrade.sdk.validation.group.Insert;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
@@ -16,7 +16,7 @@ public class ValidationRole implements Serializable {
 
     @NotNull(groups = {Default.class, Insert.class})
     @Valid
-    private ValidationIdKey key;
+    private ValidationLongIdKey key;
 
     private boolean enabled;
 
@@ -26,11 +26,11 @@ public class ValidationRole implements Serializable {
     public ValidationRole() {
     }
 
-    public ValidationIdKey getKey() {
+    public ValidationLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(ValidationIdKey key) {
+    public void setKey(ValidationLongIdKey key) {
         this.key = key;
     }
 

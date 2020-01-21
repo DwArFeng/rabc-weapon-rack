@@ -1,35 +1,36 @@
 package com.dwarfeng.rabcwr.stack.bean.entity;
 
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
+import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 /**
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class Role implements Entity<IdKey> {
+public class Role implements Entity<StringIdKey> {
 
     private static final long serialVersionUID = -1496451428523868925L;
 
-    private IdKey key;
+    private StringIdKey key;
     private boolean enabled;
     private String remark;
 
     public Role() {
     }
 
-    public Role(IdKey key, boolean enabled, String remark) {
+    public Role(StringIdKey key, boolean enabled, String remark) {
         this.key = key;
         this.enabled = enabled;
         this.remark = remark;
     }
 
     @Override
-    public IdKey getKey() {
+    public StringIdKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(IdKey key) {
+    public void setKey(StringIdKey key) {
         this.key = key;
     }
 

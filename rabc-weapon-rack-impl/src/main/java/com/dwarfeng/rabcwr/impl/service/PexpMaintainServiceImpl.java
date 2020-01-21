@@ -1,35 +1,53 @@
 package com.dwarfeng.rabcwr.impl.service;
 
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
-import com.dwarfeng.rabcwr.stack.exception.ServiceException;
 import com.dwarfeng.rabcwr.stack.service.PexpMaintainService;
+import com.dwarfeng.subgrade.impl.service.GeneralCrudService;
+import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Autowired
-    private PexpMaintainServiceDelegate delegate;
+    private GeneralCrudService<LongIdKey, Pexp> delegate;
 
     @Override
-    public Pexp get(GuidKey key) throws ServiceException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean exists(LongIdKey key) throws ServiceException {
+        return delegate.exists(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Pexp get(LongIdKey key) throws ServiceException {
         return delegate.get(key);
     }
 
     @Override
-    public GuidKey insert(Pexp pexp) throws ServiceException {
-        return delegate.insert(pexp);
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public LongIdKey insert(Pexp element) throws ServiceException {
+        return delegate.insert(element);
     }
 
     @Override
-    public GuidKey update(Pexp pexp) throws ServiceException {
-        return delegate.update(pexp);
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public LongIdKey update(Pexp element) throws ServiceException {
+        return delegate.update(element);
     }
 
     @Override
-    public void delete(GuidKey key) throws ServiceException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(LongIdKey key) throws ServiceException {
         delegate.delete(key);
     }
 }

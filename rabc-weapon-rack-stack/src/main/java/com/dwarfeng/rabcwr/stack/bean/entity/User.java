@@ -1,7 +1,7 @@
 package com.dwarfeng.rabcwr.stack.bean.entity;
 
-
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
+import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 /**
  * 用户。
@@ -9,11 +9,11 @@ import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class User implements Entity<IdKey> {
+public class User implements Entity<StringIdKey> {
 
     private static final long serialVersionUID = -7166808835407200393L;
 
-    private IdKey key;
+    private StringIdKey key;
     private String name;
     private String password;
     private boolean enabled;
@@ -22,7 +22,7 @@ public class User implements Entity<IdKey> {
     public User() {
     }
 
-    public User(IdKey key, String name, String password, boolean enabled, String remark) {
+    public User(StringIdKey key, String name, String password, boolean enabled, String remark) {
         this.key = key;
         this.name = name;
         this.password = password;
@@ -31,12 +31,12 @@ public class User implements Entity<IdKey> {
     }
 
     @Override
-    public IdKey getKey() {
+    public StringIdKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(IdKey key) {
+    public void setKey(StringIdKey key) {
         this.key = key;
     }
 

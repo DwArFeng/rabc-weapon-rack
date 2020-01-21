@@ -1,23 +1,23 @@
 package com.dwarfeng.rabcwr.impl.bean.entity;
 
-import com.dwarfeng.rabcwr.impl.bean.key.HibernateGuidKey;
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Optional;
 
 @Entity
-@IdClass(HibernateGuidKey.class)
+@IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_permission")
-public class HibernatePermission implements Serializable {
+public class HibernatePermission implements Bean {
 
     private static final long serialVersionUID = 6093141336619024729L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "guid", nullable = false, unique = true)
-    private Long guid;
+    @Column(name = "id", nullable = false, unique = true)
+    private Long longId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "content", length = Constraints.LENGTH_CONTENT, nullable = false)
@@ -29,20 +29,20 @@ public class HibernatePermission implements Serializable {
     public HibernatePermission() {
     }
 
-    public HibernateGuidKey getKey() {
-        return Optional.ofNullable(guid).map(HibernateGuidKey::new).orElse(null);
+    public HibernateLongIdKey getKey() {
+        return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateGuidKey guidKey) {
-        this.guid = Optional.ofNullable(guidKey).map(HibernateGuidKey::getGuid).orElse(null);
+    public void setKey(HibernateLongIdKey guidKey) {
+        this.longId = Optional.ofNullable(guidKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    public Long getGuid() {
-        return guid;
+    public Long getLongId() {
+        return longId;
     }
 
-    public void setGuid(Long guid) {
-        this.guid = guid;
+    public void setLongId(Long longId) {
+        this.longId = longId;
     }
 
     public String getContent() {
@@ -64,7 +64,7 @@ public class HibernatePermission implements Serializable {
     @Override
     public String toString() {
         return "HibernatePermission{" +
-                "guid=" + guid +
+                "longId=" + longId +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';

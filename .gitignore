@@ -52,11 +52,11 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/rabc-weapon-rack-node/rabc-weapon-rack-node-dubbo/logs/
-/rabc-weapon-rack-api/rabc-weapon-rack-api-dubbo/logs/
+/rabc-weapon-rack-node/logs/
+/rabc-weapon-rack-api/logs/
 
 #################
 ## Configuration Files
 #################
-/rabc-weapon-rack-node/rabc-weapon-rack-node-dubbo/conf/
-/rabc-weapon-rack-api/rabc-weapon-rack-api-dubbo/conf/
+/rabc-weapon-rack-node/conf/
+/rabc-weapon-rack-api/conf/

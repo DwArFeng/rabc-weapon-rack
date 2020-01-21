@@ -1,8 +1,8 @@
 package com.dwarfeng.rabcwr.sdk.validation.bean.entity;
 
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
-import com.dwarfeng.rabcwr.sdk.validation.group.Insert;
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
+import com.dwarfeng.subgrade.sdk.validation.group.Insert;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
@@ -16,7 +16,7 @@ public class ValidationPermission implements Serializable {
 
     @NotNull(groups = {Default.class})
     @Valid
-    private GuidKey key;
+    private LongIdKey key;
 
     @NotNull(groups = {Default.class, Insert.class})
     @Length(max = Constraints.LENGTH_CONTENT, groups = {Default.class, Insert.class})
@@ -28,11 +28,11 @@ public class ValidationPermission implements Serializable {
     public ValidationPermission() {
     }
 
-    public GuidKey getKey() {
+    public LongIdKey getKey() {
         return key;
     }
 
-    public void setKey(GuidKey key) {
+    public void setKey(LongIdKey key) {
         this.key = key;
     }
 

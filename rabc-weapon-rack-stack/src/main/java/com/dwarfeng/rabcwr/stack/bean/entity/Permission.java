@@ -1,31 +1,32 @@
 package com.dwarfeng.rabcwr.stack.bean.entity;
 
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
+import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 
-public class Permission implements Entity<GuidKey> {
+public class Permission implements Entity<LongIdKey> {
 
     private static final long serialVersionUID = -1534203776335886L;
 
-    private GuidKey key;
+    private LongIdKey key;
     private String content;
     private String remark;
 
     public Permission() {
     }
 
-    public Permission(GuidKey key, String content, String remark) {
+    public Permission(LongIdKey key, String content, String remark) {
         this.key = key;
         this.content = content;
         this.remark = remark;
     }
 
     @Override
-    public GuidKey getKey() {
+    public LongIdKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(GuidKey key) {
+    public void setKey(LongIdKey key) {
         this.key = key;
     }
 

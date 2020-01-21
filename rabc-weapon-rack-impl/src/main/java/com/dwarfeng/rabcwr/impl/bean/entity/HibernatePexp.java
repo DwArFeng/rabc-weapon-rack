@@ -1,24 +1,24 @@
 package com.dwarfeng.rabcwr.impl.bean.entity;
 
-import com.dwarfeng.rabcwr.impl.bean.key.HibernateGuidKey;
-import com.dwarfeng.rabcwr.impl.bean.key.HibernateIdKey;
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
+import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Optional;
 
 @Entity
-@IdClass(HibernateGuidKey.class)
+@IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_pexp")
-public class HibernatePexp implements Serializable {
+public class HibernatePexp implements Bean {
 
     private static final long serialVersionUID = 5957571523574482047L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "guid", nullable = false, unique = true)
-    private Long guid;
+    @Column(name = "id", nullable = false, unique = true)
+    private Long longId;
 
     // -----------------------------------------------------------外键-----------------------------------------------------------
     @Column(name = "role_id", length = Constraints.LENGTH_ID, nullable = true)
@@ -41,28 +41,28 @@ public class HibernatePexp implements Serializable {
     public HibernatePexp() {
     }
 
-    public HibernateGuidKey getKey() {
-        return Optional.ofNullable(guid).map(HibernateGuidKey::new).orElse(null);
+    public HibernateLongIdKey getKey() {
+        return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateGuidKey guidKey) {
-        this.guid = Optional.ofNullable(guidKey).map(HibernateGuidKey::getGuid).orElse(null);
+    public void setKey(HibernateLongIdKey guidKey) {
+        this.longId = Optional.ofNullable(guidKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    public Long getGuid() {
-        return guid;
+    public Long getLongId() {
+        return longId;
     }
 
-    public void setGuid(Long guid) {
-        this.guid = guid;
+    public void setLongId(Long guid) {
+        this.longId = guid;
     }
 
-    public HibernateIdKey getRoleKey() {
-        return Optional.ofNullable(roleId).map(HibernateIdKey::new).orElse(null);
+    public HibernateStringIdKey getRoleKey() {
+        return Optional.ofNullable(roleId).map(HibernateStringIdKey::new).orElse(null);
     }
 
-    public void setRoleKey(HibernateIdKey guidKey) {
-        this.roleId = Optional.ofNullable(guidKey).map(HibernateIdKey::getId).orElse(null);
+    public void setRoleKey(HibernateStringIdKey guidKey) {
+        this.roleId = Optional.ofNullable(guidKey).map(HibernateStringIdKey::getStringId).orElse(null);
     }
 
     public String getRoleId() {
@@ -100,7 +100,7 @@ public class HibernatePexp implements Serializable {
     @Override
     public String toString() {
         return "HibernatePexp{" +
-                "guid=" + guid +
+                "longId=" + longId +
                 ", roleId='" + roleId + '\'' +
                 ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +

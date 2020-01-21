@@ -1,5 +1,7 @@
 package com.dwarfeng.rabcwr.stack.bean.dto;
 
+import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+
 public class RegisterInfo implements Dto {
 
     private static final long serialVersionUID = 3823420735812131351L;

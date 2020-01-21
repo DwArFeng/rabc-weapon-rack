@@ -1,5 +1,6 @@
 package com.dwarfeng.rabcwr.sdk.util;
 
+import com.dwarfeng.subgrade.sdk.util.Constants;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 

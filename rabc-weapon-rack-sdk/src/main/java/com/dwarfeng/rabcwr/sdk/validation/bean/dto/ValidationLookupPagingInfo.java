@@ -1,6 +1,6 @@
 package com.dwarfeng.rabcwr.sdk.validation.bean.dto;
 
-import com.dwarfeng.rabcwr.sdk.validation.group.Insert;
+import com.dwarfeng.subgrade.sdk.validation.group.Insert;
 
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.Default;

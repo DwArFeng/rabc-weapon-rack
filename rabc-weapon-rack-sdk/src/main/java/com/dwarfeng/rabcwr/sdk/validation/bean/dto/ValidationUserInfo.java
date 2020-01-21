@@ -1,7 +1,7 @@
 package com.dwarfeng.rabcwr.sdk.validation.bean.dto;
 
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
-import com.dwarfeng.rabcwr.sdk.validation.group.Insert;
+import com.dwarfeng.subgrade.sdk.validation.group.Insert;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;

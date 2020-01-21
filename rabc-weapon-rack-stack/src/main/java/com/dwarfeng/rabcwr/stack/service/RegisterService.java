@@ -5,7 +5,8 @@ import com.dwarfeng.rabcwr.stack.bean.dto.PasswordInfo;
 import com.dwarfeng.rabcwr.stack.bean.dto.RegisterInfo;
 import com.dwarfeng.rabcwr.stack.bean.dto.UserInfo;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
-import com.dwarfeng.rabcwr.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.Service;
 
 /**
  * 注册服务。

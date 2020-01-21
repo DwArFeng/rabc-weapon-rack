@@ -1,25 +1,25 @@
 package com.dwarfeng.rabcwr.impl.bean.entity;
 
-import com.dwarfeng.rabcwr.impl.bean.key.HibernateIdKey;
 import com.dwarfeng.rabcwr.sdk.util.Constraints;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
+import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 @Entity
-@IdClass(HibernateIdKey.class)
+@IdClass(HibernateStringIdKey.class)
 @Table(name = "tbl_user")
-public class HibernateUser implements Serializable {
+public class HibernateUser implements Bean {
 
     private static final long serialVersionUID = 6069180993822366758L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", length = Constraints.LENGTH_ID, nullable = false, unique = true)
-    private String id;
+    private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
@@ -41,20 +41,20 @@ public class HibernateUser implements Serializable {
     public HibernateUser() {
     }
 
-    public HibernateIdKey getKey() {
-        return Optional.ofNullable(id).map(HibernateIdKey::new).orElse(null);
+    public HibernateStringIdKey getKey() {
+        return Optional.ofNullable(stringId).map(HibernateStringIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateIdKey uuidKey) {
-        this.id = Optional.ofNullable(uuidKey).map(HibernateIdKey::getId).orElse(null);
+    public void setKey(HibernateStringIdKey uuidKey) {
+        this.stringId = Optional.ofNullable(uuidKey).map(HibernateStringIdKey::getStringId).orElse(null);
     }
 
-    public String getId() {
-        return id;
+    public String getStringId() {
+        return stringId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     public String getName() {
@@ -100,7 +100,7 @@ public class HibernateUser implements Serializable {
     @Override
     public String toString() {
         return "HibernateUser{" +
-                "id='" + id + '\'' +
+                "stringId='" + stringId + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +

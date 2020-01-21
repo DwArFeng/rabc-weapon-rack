@@ -1,35 +1,47 @@
 package com.dwarfeng.rabcwr.impl.cache;
 
+import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 import com.dwarfeng.rabcwr.stack.cache.PexpCache;
-import com.dwarfeng.rabcwr.stack.exception.CacheException;
+import com.dwarfeng.subgrade.impl.cache.RedisStringJsonBaseCache;
+import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class PexpCacheImpl implements PexpCache {
 
     @Autowired
-    private PexpCacheDelegate delegate;
+    private RedisStringJsonBaseCache<LongIdKey, Pexp, FastJsonPexp> delegate;
 
     @Override
-    public boolean exists(GuidKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean exists(LongIdKey key) throws CacheException {
         return delegate.exists(key);
     }
 
     @Override
-    public Pexp get(GuidKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Pexp get(LongIdKey key) throws CacheException {
         return delegate.get(key);
     }
 
     @Override
-    public void push(GuidKey key, Pexp value, long timeout) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void push(LongIdKey key, Pexp value, long timeout) throws CacheException {
         delegate.push(key, value, timeout);
     }
 
     @Override
-    public void delete(GuidKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(LongIdKey key) throws CacheException {
         delegate.delete(key);
     }
 }

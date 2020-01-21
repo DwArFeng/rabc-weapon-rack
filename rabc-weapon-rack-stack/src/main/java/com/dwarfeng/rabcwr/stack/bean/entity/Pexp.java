@@ -1,25 +1,26 @@
 package com.dwarfeng.rabcwr.stack.bean.entity;
 
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
+import com.dwarfeng.subgrade.stack.bean.entity.Entity;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 /**
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public class Pexp implements Entity<GuidKey> {
+public class Pexp implements Entity<LongIdKey> {
 
     private static final long serialVersionUID = -7246102861329325491L;
 
-    private GuidKey key;
-    private IdKey roleKey;
+    private LongIdKey key;
+    private StringIdKey roleKey;
     private String content;
     private String remark;
 
     public Pexp() {
     }
 
-    public Pexp(GuidKey key, IdKey roleKey, String content, String remark) {
+    public Pexp(LongIdKey key, StringIdKey roleKey, String content, String remark) {
         this.key = key;
         this.roleKey = roleKey;
         this.content = content;
@@ -27,20 +28,20 @@ public class Pexp implements Entity<GuidKey> {
     }
 
     @Override
-    public GuidKey getKey() {
+    public LongIdKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(GuidKey key) {
+    public void setKey(LongIdKey key) {
         this.key = key;
     }
 
-    public IdKey getRoleKey() {
+    public StringIdKey getRoleKey() {
         return roleKey;
     }
 
-    public void setRoleKey(IdKey roleKey) {
+    public void setRoleKey(StringIdKey roleKey) {
         this.roleKey = roleKey;
     }
 

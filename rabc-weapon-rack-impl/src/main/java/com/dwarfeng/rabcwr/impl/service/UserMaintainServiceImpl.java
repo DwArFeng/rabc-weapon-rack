@@ -1,35 +1,53 @@
 package com.dwarfeng.rabcwr.impl.service;
 
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
-import com.dwarfeng.rabcwr.stack.exception.ServiceException;
 import com.dwarfeng.rabcwr.stack.service.UserMaintainService;
+import com.dwarfeng.subgrade.impl.service.GeneralCrudService;
+import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserMaintainServiceImpl implements UserMaintainService {
 
     @Autowired
-    private UserMaintainServiceDelegate delegate;
+    private GeneralCrudService<StringIdKey, User> delegate;
 
     @Override
-    public User get(IdKey key) throws ServiceException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean exists(StringIdKey key) throws ServiceException {
+        return delegate.exists(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public User get(StringIdKey key) throws ServiceException {
         return delegate.get(key);
     }
 
     @Override
-    public IdKey insert(User user) throws ServiceException {
-        return delegate.insert(user);
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insert(User element) throws ServiceException {
+        return delegate.insert(element);
     }
 
     @Override
-    public IdKey update(User user) throws ServiceException {
-        return delegate.update(user);
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey update(User element) throws ServiceException {
+        return delegate.update(element);
     }
 
     @Override
-    public void delete(IdKey key) throws ServiceException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(StringIdKey key) throws ServiceException {
         delegate.delete(key);
     }
 }

@@ -1,40 +1,55 @@
 package com.dwarfeng.rabcwr.impl.dao;
 
+import com.dwarfeng.rabcwr.impl.bean.entity.HibernatePermission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
-import com.dwarfeng.rabcwr.stack.bean.key.GuidKey;
 import com.dwarfeng.rabcwr.stack.dao.PermissionDao;
-import com.dwarfeng.rabcwr.stack.exception.DaoException;
+import com.dwarfeng.subgrade.impl.dao.HibernateBaseDao;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class PermissionDaoImpl implements PermissionDao {
 
     @Autowired
-    private PermissionDaoDelegate delegate;
+    private HibernateBaseDao<LongIdKey, HibernateLongIdKey, Permission, HibernatePermission> delegate;
 
     @Override
-    public boolean exists(GuidKey key) throws DaoException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public LongIdKey insert(Permission element) throws DaoException {
+        return delegate.insert(element);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public LongIdKey update(Permission element) throws DaoException {
+        return delegate.update(element);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(LongIdKey key) throws DaoException {
+        delegate.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean exists(LongIdKey key) throws DaoException {
         return delegate.exists(key);
     }
 
     @Override
-    public Permission get(GuidKey key) throws DaoException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Permission get(LongIdKey key) throws DaoException {
         return delegate.get(key);
-    }
-
-    @Override
-    public GuidKey insert(Permission permission) throws DaoException {
-        return delegate.insert(permission);
-    }
-
-    @Override
-    public GuidKey update(Permission permission) throws DaoException {
-        return delegate.update(permission);
-    }
-
-    @Override
-    public void delete(GuidKey key) throws DaoException {
-        delegate.delete(key);
     }
 }

@@ -1,35 +1,47 @@
 package com.dwarfeng.rabcwr.impl.cache;
 
+import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonRole;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
-import com.dwarfeng.rabcwr.stack.bean.key.IdKey;
 import com.dwarfeng.rabcwr.stack.cache.RoleCache;
-import com.dwarfeng.rabcwr.stack.exception.CacheException;
+import com.dwarfeng.subgrade.impl.cache.RedisStringJsonBaseCache;
+import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class RoleCacheImpl implements RoleCache {
 
     @Autowired
-    private RoleCacheDelegate delegate;
+    private RedisStringJsonBaseCache<StringIdKey, Role, FastJsonRole> delegate;
 
     @Override
-    public boolean exists(IdKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean exists(StringIdKey key) throws CacheException {
         return delegate.exists(key);
     }
 
     @Override
-    public Role get(IdKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Role get(StringIdKey key) throws CacheException {
         return delegate.get(key);
     }
 
     @Override
-    public void push(IdKey key, Role value, long timeout) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void push(StringIdKey key, Role value, long timeout) throws CacheException {
         delegate.push(key, value, timeout);
     }
 
     @Override
-    public void delete(IdKey key) throws CacheException {
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(StringIdKey key) throws CacheException {
         delegate.delete(key);
     }
 }
