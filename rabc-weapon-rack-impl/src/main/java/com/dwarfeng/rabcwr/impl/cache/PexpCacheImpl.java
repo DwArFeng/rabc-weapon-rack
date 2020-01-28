@@ -3,7 +3,7 @@ package com.dwarfeng.rabcwr.impl.cache;
 import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.cache.PexpCache;
-import com.dwarfeng.subgrade.impl.cache.RedisStringJsonBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PexpCacheImpl implements PexpCache {
 
     @Autowired
-    private RedisStringJsonBaseCache<LongIdKey, Pexp, FastJsonPexp> delegate;
+    private RedisBaseCache<LongIdKey, Pexp, FastJsonPexp> delegate;
 
     @Override
     @BehaviorAnalyse
@@ -43,5 +43,12 @@ public class PexpCacheImpl implements PexpCache {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void delete(LongIdKey key) throws CacheException {
         delegate.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void clear() throws CacheException {
+        delegate.clear();
     }
 }

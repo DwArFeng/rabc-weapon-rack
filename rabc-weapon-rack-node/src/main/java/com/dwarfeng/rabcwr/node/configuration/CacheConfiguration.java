@@ -9,7 +9,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
-import com.dwarfeng.subgrade.impl.cache.RedisStringJsonBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.impl.cache.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.impl.cache.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -25,7 +25,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class CacheConfiguration {
 
     @Autowired
-    private RedisTemplate<String, Object> template;
+    private RedisTemplate<String, ?> template;
     @Autowired
     private Mapper mapper;
 
@@ -39,36 +39,40 @@ public class CacheConfiguration {
     private String userPrefix;
 
     @Bean
-    public RedisStringJsonBaseCache<LongIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
-        return new RedisStringJsonBaseCache<>(
-                template,
+    public RedisBaseCache<LongIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
+        //noinspection unchecked
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonPermission>) template,
                 new LongIdStringKeyFormatter(permissionPrefix),
                 new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
         );
     }
 
     @Bean
-    public RedisStringJsonBaseCache<LongIdKey, Pexp, FastJsonPexp> pexpCacheDelegate() {
-        return new RedisStringJsonBaseCache<>(
-                template,
+    public RedisBaseCache<LongIdKey, Pexp, FastJsonPexp> pexpCacheDelegate() {
+        //noinspection unchecked
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonPexp>) template,
                 new LongIdStringKeyFormatter(pexpPrefix),
                 new DozerBeanTransformer<>(Pexp.class, FastJsonPexp.class, mapper)
         );
     }
 
     @Bean
-    public RedisStringJsonBaseCache<StringIdKey, Role, FastJsonRole> roleCacheDelegate() {
-        return new RedisStringJsonBaseCache<>(
-                template,
+    public RedisBaseCache<StringIdKey, Role, FastJsonRole> roleCacheDelegate() {
+        //noinspection unchecked
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonRole>) template,
                 new StringIdStringKeyFormatter(rolePrefix),
                 new DozerBeanTransformer<>(Role.class, FastJsonRole.class, mapper)
         );
     }
 
     @Bean
-    public RedisStringJsonBaseCache<StringIdKey, User, FastJsonUser> userCacheDelegate() {
-        return new RedisStringJsonBaseCache<>(
-                template,
+    public RedisBaseCache<StringIdKey, User, FastJsonUser> userCacheDelegate() {
+        //noinspection unchecked
+        return new RedisBaseCache<>(
+                (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
                 new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
         );

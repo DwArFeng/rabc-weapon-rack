@@ -3,7 +3,7 @@ package com.dwarfeng.rabcwr.impl.cache;
 import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonUser;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.cache.UserCache;
-import com.dwarfeng.subgrade.impl.cache.RedisStringJsonBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserCacheImpl implements UserCache {
 
     @Autowired
-    private RedisStringJsonBaseCache<StringIdKey, User, FastJsonUser> delegate;
+    private RedisBaseCache<StringIdKey, User, FastJsonUser> delegate;
 
     @Override
     @BehaviorAnalyse
@@ -43,5 +43,12 @@ public class UserCacheImpl implements UserCache {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void delete(StringIdKey key) throws CacheException {
         delegate.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void clear() throws CacheException {
+        delegate.clear();
     }
 }
