@@ -3,7 +3,7 @@ package com.dwarfeng.rabcwr.impl.cache;
 import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonRole;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.cache.RoleCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public class RoleCacheImpl implements RoleCache {
 
     @Autowired
-    private RedisBaseCache<StringIdKey, Role, FastJsonRole> delegate;
+    private RedisBatchBaseCache<StringIdKey, Role, FastJsonRole> delegate;
 
     @Override
     @BehaviorAnalyse
@@ -34,8 +36,8 @@ public class RoleCacheImpl implements RoleCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void push(StringIdKey key, Role value, long timeout) throws CacheException {
-        delegate.push(key, value, timeout);
+    public void push(Role value, long timeout) throws CacheException {
+        delegate.push(value, timeout);
     }
 
     @Override
@@ -50,5 +52,40 @@ public class RoleCacheImpl implements RoleCache {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void clear() throws CacheException {
         delegate.clear();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean allExists(List<StringIdKey> keys) throws CacheException {
+        return delegate.allExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public boolean nonExists(List<StringIdKey> keys) throws CacheException {
+        return delegate.nonExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<Role> batchGet(List<StringIdKey> keys) throws CacheException {
+        return delegate.batchGet(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchPush(List<Role> entities, long timeout) throws CacheException {
+        delegate.batchPush(entities, timeout);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchDelete(List<StringIdKey> keys) throws CacheException {
+        delegate.batchDelete(keys);
     }
 }

@@ -53,10 +53,10 @@ buildNumber.properties
 ## Logger Files
 #################
 /rabc-weapon-rack-node/logs/
-/rabc-weapon-rack-api/logs/
+/rabc-weapon-rack-impl/logs/
 
 #################
 ## Configuration Files
 #################
 /rabc-weapon-rack-node/conf/
-/rabc-weapon-rack-api/conf/
+/rabc-weapon-rack-impl/conf/
