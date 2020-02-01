@@ -1,6 +1,6 @@
 package com.dwarfeng.rabcwr.impl.cache;
 
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonUser;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonUser;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.cache.UserCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;

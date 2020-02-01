@@ -17,6 +17,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetDeleteDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
@@ -36,21 +37,30 @@ public class DaoConfiguration {
     private BeanTransformerConfiguration beanTransformerConfiguration;
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Permission, HibernatePermission> permissionDaoDelegate() {
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Permission, HibernatePermission> permissionDaoDelegate() {
         return new HibernateBatchBaseDao<>(
                 template,
-                beanTransformerConfiguration.longIdKeyBeanTransformer(),
+                beanTransformerConfiguration.stringIdKeyBeanTransformer(),
                 beanTransformerConfiguration.permissionBeanTransformer(),
                 HibernatePermission.class);
     }
 
     @Bean
-    public HibernatePresetDeleteDao<LongIdKey, Permission, HibernatePermission> permissionHibernatePresetDeleteDao() {
+    public HibernatePresetDeleteDao<StringIdKey, Permission, HibernatePermission> permissionHibernatePresetDeleteDao() {
         return new HibernatePresetDeleteDao<>(
                 template,
                 beanTransformerConfiguration.permissionBeanTransformer(),
                 HibernatePermission.class,
                 new PermissionPresetCriteriaMaker()
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Permission, HibernatePermission> permissionHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                beanTransformerConfiguration.permissionBeanTransformer(),
+                HibernatePermission.class
         );
     }
 

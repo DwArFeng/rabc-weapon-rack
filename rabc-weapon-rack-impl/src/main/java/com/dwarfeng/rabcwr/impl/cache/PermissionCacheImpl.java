@@ -1,11 +1,11 @@
 package com.dwarfeng.rabcwr.impl.cache;
 
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPermission;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPermission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.cache.PermissionCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,19 +17,19 @@ import java.util.List;
 public class PermissionCacheImpl implements PermissionCache {
 
     @Autowired
-    private RedisBatchBaseCache<LongIdKey, Permission, FastJsonPermission> delegate;
+    private RedisBatchBaseCache<StringIdKey, Permission, FastJsonPermission> delegate;
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public boolean exists(LongIdKey key) throws CacheException {
+    public boolean exists(StringIdKey key) throws CacheException {
         return delegate.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public Permission get(LongIdKey key) throws CacheException {
+    public Permission get(StringIdKey key) throws CacheException {
         return delegate.get(key);
     }
 
@@ -43,7 +43,7 @@ public class PermissionCacheImpl implements PermissionCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void delete(LongIdKey key) throws CacheException {
+    public void delete(StringIdKey key) throws CacheException {
         delegate.delete(key);
     }
 
@@ -57,21 +57,21 @@ public class PermissionCacheImpl implements PermissionCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public boolean allExists(List<LongIdKey> keys) throws CacheException {
+    public boolean allExists(List<StringIdKey> keys) throws CacheException {
         return delegate.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public boolean nonExists(List<LongIdKey> keys) throws CacheException {
+    public boolean nonExists(List<StringIdKey> keys) throws CacheException {
         return delegate.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public List<Permission> batchGet(List<LongIdKey> keys) throws CacheException {
+    public List<Permission> batchGet(List<StringIdKey> keys) throws CacheException {
         return delegate.batchGet(keys);
     }
 
@@ -85,7 +85,7 @@ public class PermissionCacheImpl implements PermissionCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void batchDelete(List<LongIdKey> keys) throws CacheException {
+    public void batchDelete(List<StringIdKey> keys) throws CacheException {
         delegate.batchDelete(keys);
     }
 }

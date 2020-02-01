@@ -1,6 +1,6 @@
 package com.dwarfeng.rabcwr.impl.cache;
 
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPexp;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.cache.PexpCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;

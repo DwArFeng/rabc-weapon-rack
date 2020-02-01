@@ -1,7 +1,7 @@
-package com.dwarfeng.rabcwr.impl.bean.entity;
+package com.dwarfeng.rabcwr.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 public class FastJsonPermission implements Bean {
@@ -9,31 +9,20 @@ public class FastJsonPermission implements Bean {
     private static final long serialVersionUID = -1611452886001308613L;
 
     @JSONField(name = "key", ordinal = 1)
-    private FastJsonLongIdKey key;
+    private FastJsonStringIdKey key;
 
-    @JSONField(name = "content", ordinal = 2)
-    private String content;
-
-    @JSONField(name = "remark", ordinal = 3)
+    @JSONField(name = "remark", ordinal = 2)
     private String remark;
 
     public FastJsonPermission() {
     }
 
-    public FastJsonLongIdKey getKey() {
+    public FastJsonStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(FastJsonStringIdKey key) {
         this.key = key;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getRemark() {
@@ -46,9 +35,8 @@ public class FastJsonPermission implements Bean {
 
     @Override
     public String toString() {
-        return "JsonPermission{" +
+        return "FastJsonPermission{" +
                 "key=" + key +
-                ", content='" + content + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

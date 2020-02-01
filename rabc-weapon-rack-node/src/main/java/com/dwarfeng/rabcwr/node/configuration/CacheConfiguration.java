@@ -1,15 +1,16 @@
 package com.dwarfeng.rabcwr.node.configuration;
 
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPermission;
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonPexp;
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonRole;
-import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonUser;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPermission;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPexp;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonRole;
+import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonUser;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -37,13 +38,25 @@ public class CacheConfiguration {
     private String rolePrefix;
     @Value("${cache.prefix.entity.user}")
     private String userPrefix;
+    @Value("${cache.list.permission}")
+    private String permissionListKey;
 
     @Bean
-    public RedisBatchBaseCache<LongIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
+    public RedisBatchBaseCache<StringIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
         //noinspection unchecked
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPermission>) template,
-                new LongIdStringKeyFormatter(permissionPrefix),
+                new StringIdStringKeyFormatter(permissionPrefix),
+                new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
+        );
+    }
+
+    @Bean
+    public RedisListCache<Permission, FastJsonPermission> permissionRedisListCache() {
+        //noinspection unchecked
+        return new RedisListCache<>(
+                permissionListKey,
+                (RedisTemplate<String, FastJsonPermission>) template,
                 new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
         );
     }

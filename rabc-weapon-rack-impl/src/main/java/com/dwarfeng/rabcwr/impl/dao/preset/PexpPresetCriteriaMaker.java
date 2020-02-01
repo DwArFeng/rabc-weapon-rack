@@ -1,29 +1,60 @@
 package com.dwarfeng.rabcwr.impl.dao.preset;
 
+import com.dwarfeng.rabcwr.stack.service.PexpMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PexpPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
     public void makeCriteria(DetachedCriteria detachedCriteria, String s, Object[] objects) {
         switch (s) {
-//            case PermissionMaintainService.CHILD_FOR_PARENT:
-//                childForParent(detachedCriteria, objects);
-//                break;
+            case PexpMaintainService.CHILD_FOR_ROLE:
+                childForRole(detachedCriteria, objects);
+                break;
+            case PexpMaintainService.CHILD_FOR_ROLE_SET:
+                childForRoleSet(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
     }
 
-//    private void childForParent(DetachedCriteria detachedCriteria, Object[] objects) {
-//        Object object = objects[0];
-//        if (Objects.isNull(object)) {
-//            detachedCriteria.add(Restrictions.isNull("parentLongId"));
-//        } else if (object instanceof LongIdKey) {
-//            detachedCriteria.add(Restrictions.eqOrIsNull("parentLongId", ((LongIdKey) object).getLongId()));
-//        } else {
-//            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
-//        }
-//    }
+    private void childForRole(DetachedCriteria detachedCriteria, Object[] objects) {
+        Object object = objects[0];
+        if (Objects.isNull(object)) {
+            detachedCriteria.add(Restrictions.isNull("roleId"));
+        } else if (object instanceof StringIdKey) {
+            detachedCriteria.add(Restrictions.eqOrIsNull("roleId", ((StringIdKey) object).getStringId()));
+        } else {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void childForRoleSet(DetachedCriteria detachedCriteria, Object[] objects) {
+        Object object = objects[0];
+        if (Objects.isNull(object)) {
+            detachedCriteria.add(Restrictions.isNull("roleId"));
+        } else if (object instanceof List) {
+            if (((List<?>) object).isEmpty()) {
+                detachedCriteria.add(Restrictions.isNull("longId"));
+            } else {
+                //noinspection unchecked
+                detachedCriteria.add(Restrictions.in("roleId", stringList((List<StringIdKey>) object)));
+            }
+        } else {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private List<String> stringList(List<StringIdKey> list) {
+        return list.stream().map(StringIdKey::getStringId).collect(Collectors.toList());
+    }
 }

@@ -37,11 +37,11 @@ public class ServiceConfiguration {
     private long userTimeout;
 
     @Bean
-    public GeneralCrudService<LongIdKey, Permission> permissionGeneralCrudService() {
+    public GeneralCrudService<StringIdKey, Permission> permissionGeneralCrudService() {
         return new GeneralCrudService<>(
                 daoConfiguration.permissionDaoDelegate(),
                 cacheConfiguration.permissionCacheDelegate(),
-                keyFetcher,
+                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 permissionTimeout
@@ -65,7 +65,7 @@ public class ServiceConfiguration {
         return new GeneralCrudService<>(
                 daoConfiguration.roleDaoDelegate(),
                 cacheConfiguration.roleCacheDelegate(),
-                new ExceptionKeyFetcher<StringIdKey>(),
+                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 roleTimeout
@@ -77,7 +77,7 @@ public class ServiceConfiguration {
         return new GeneralCrudService<>(
                 daoConfiguration.userDaoDelegate(),
                 cacheConfiguration.userCacheDelegate(),
-                new ExceptionKeyFetcher<StringIdKey>(),
+                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 userTimeout

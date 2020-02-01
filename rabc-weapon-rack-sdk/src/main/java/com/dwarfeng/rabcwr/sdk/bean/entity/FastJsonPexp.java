@@ -1,4 +1,4 @@
-package com.dwarfeng.rabcwr.impl.bean.entity;
+package com.dwarfeng.rabcwr.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
