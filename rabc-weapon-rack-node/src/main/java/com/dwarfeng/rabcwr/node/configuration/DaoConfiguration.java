@@ -4,12 +4,12 @@ import com.dwarfeng.rabcwr.impl.bean.entity.HibernatePermission;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernatePexp;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateRole;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateUser;
-import com.dwarfeng.rabcwr.impl.dao.preset.PermissionPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.PexpPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.RolePresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.UserPresetCriteriaMaker;
+import com.dwarfeng.rabcwr.impl.dao.preset.modifacation.RoleDeletionMod;
 import com.dwarfeng.rabcwr.impl.dao.preset.modifacation.RoleUserRelationMod;
-import com.dwarfeng.rabcwr.impl.dao.preset.modifacation.UserDeletionMode;
+import com.dwarfeng.rabcwr.impl.dao.preset.modifacation.UserDeletionMod;
 import com.dwarfeng.rabcwr.impl.dao.preset.modifacation.UserRoleRelationMod;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
@@ -46,16 +46,6 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernatePresetDeleteDao<StringIdKey, Permission, HibernatePermission> permissionHibernatePresetDeleteDao() {
-        return new HibernatePresetDeleteDao<>(
-                template,
-                beanTransformerConfiguration.permissionBeanTransformer(),
-                HibernatePermission.class,
-                new PermissionPresetCriteriaMaker()
-        );
-    }
-
-    @Bean
     public HibernateEntireLookupDao<Permission, HibernatePermission> permissionHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 template,
@@ -89,7 +79,9 @@ public class DaoConfiguration {
                 template,
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
                 beanTransformerConfiguration.roleBeanTransformer(),
-                HibernateRole.class);
+                HibernateRole.class,
+                new RoleDeletionMod()
+        );
     }
 
     @Bean
@@ -98,7 +90,8 @@ public class DaoConfiguration {
                 template,
                 beanTransformerConfiguration.roleBeanTransformer(),
                 HibernateRole.class,
-                new RolePresetCriteriaMaker()
+                new RolePresetCriteriaMaker(),
+                new RoleDeletionMod()
         );
     }
 
@@ -109,7 +102,7 @@ public class DaoConfiguration {
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
                 beanTransformerConfiguration.userBeanTransformer(),
                 HibernateUser.class,
-                new UserDeletionMode()
+                new UserDeletionMod()
         );
     }
 
@@ -120,7 +113,7 @@ public class DaoConfiguration {
                 beanTransformerConfiguration.userBeanTransformer(),
                 HibernateUser.class,
                 new UserPresetCriteriaMaker(),
-                new UserDeletionMode()
+                new UserDeletionMod()
         );
     }
 

@@ -12,6 +12,6 @@ import com.dwarfeng.subgrade.stack.service.PresetDeleteService;
  * @since 0.0.1-alpha
  */
 public interface PexpMaintainService extends CrudService<LongIdKey, Pexp>, PresetDeleteService<Pexp> {
-    String CHILD_FOR_ROLE = "child_for_role";
-    String CHILD_FOR_ROLE_SET = "child_for_role_set";
+    String PEXP_FOR_ROLE = "pexp_for_role";
+    String PEXP_FOR_ROLE_SET = "pexp_for_role_set";
 }

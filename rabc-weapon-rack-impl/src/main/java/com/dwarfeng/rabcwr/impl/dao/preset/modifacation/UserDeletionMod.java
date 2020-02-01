@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.sdk.hibernate.modification.DeletionMod;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDeletionMode implements DeletionMod<HibernateUser> {
+public class UserDeletionMod implements DeletionMod<HibernateUser> {
 
     @Override
     public List<Object> updateBeforeDelete(HibernateUser hibernateUser) {

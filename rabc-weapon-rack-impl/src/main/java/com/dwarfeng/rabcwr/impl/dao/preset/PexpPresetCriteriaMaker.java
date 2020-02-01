@@ -4,6 +4,7 @@ import com.dwarfeng.rabcwr.stack.service.PexpMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.Arrays;
@@ -16,15 +17,16 @@ public class PexpPresetCriteriaMaker implements PresetCriteriaMaker {
     @Override
     public void makeCriteria(DetachedCriteria detachedCriteria, String s, Object[] objects) {
         switch (s) {
-            case PexpMaintainService.CHILD_FOR_ROLE:
+            case PexpMaintainService.PEXP_FOR_ROLE:
                 childForRole(detachedCriteria, objects);
                 break;
-            case PexpMaintainService.CHILD_FOR_ROLE_SET:
+            case PexpMaintainService.PEXP_FOR_ROLE_SET:
                 childForRoleSet(detachedCriteria, objects);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
+        detachedCriteria.addOrder(Order.asc("longId"));
     }
 
     private void childForRole(DetachedCriteria detachedCriteria, Object[] objects) {

@@ -14,6 +14,7 @@ public class UserPresetCriteriaMaker implements PresetCriteriaMaker {
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
+//        detachedCriteria.addOrder(Order.asc("stringId"));
     }
 
 //    private void childForParent(DetachedCriteria detachedCriteria, Object[] objects) {

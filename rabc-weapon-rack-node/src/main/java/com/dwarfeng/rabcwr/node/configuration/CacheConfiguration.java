@@ -41,7 +41,7 @@ public class CacheConfiguration {
     private String userPrefix;
     @Value("${cache.list.permission}")
     private String permissionListKey;
-    @Value("${cache.list.rabcwr.list.user_has_permission}")
+    @Value("${cache.list.user_has_permission}")
     private String userPermissionListKey;
 
     @Bean

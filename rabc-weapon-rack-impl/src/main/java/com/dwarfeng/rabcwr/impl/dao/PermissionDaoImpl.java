@@ -5,7 +5,6 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.dao.PermissionDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetDeleteDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -24,8 +23,6 @@ public class PermissionDaoImpl implements PermissionDao {
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Permission, HibernatePermission> batchDelegate;
     @Autowired
     private HibernateEntireLookupDao<Permission, HibernatePermission> entireLookupDelegate;
-    @Autowired
-    private HibernatePresetDeleteDao<StringIdKey, Permission, HibernatePermission> presetDelegate;
 
     @Override
     @BehaviorAnalyse
