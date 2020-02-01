@@ -1,24 +1,24 @@
 package com.dwarfeng.rabcwr.impl.dao;
 
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateRole;
+import com.dwarfeng.rabcwr.impl.bean.entity.HibernateUser;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.dao.RoleDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetDeleteDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
-import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.dozer.Mapper;
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
@@ -27,6 +27,8 @@ public class RoleDaoImpl implements RoleDao {
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Role, HibernateRole> batchDelegate;
     @Autowired
     private HibernatePresetDeleteDao<StringIdKey, Role, HibernateRole> presetDelegate;
+    @Autowired
+    private HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateRole, HibernateUser> relationDelegate;
 
     @Autowired
     private HibernateTemplate template;
@@ -51,20 +53,7 @@ public class RoleDaoImpl implements RoleDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void delete(StringIdKey key) throws DaoException {
-        try {
-            internalDelete(key);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-    }
-
-    private void internalDelete(StringIdKey key) {
-        HibernateRole hibernateRole = template.get(HibernateRole.class, mapper.map(key, HibernateStringIdKey.class));
-        assert hibernateRole != null;
-        hibernateRole.getUsers().clear();
-        template.update(hibernateRole);
-        template.delete(hibernateRole);
-        template.flush();
+        batchDelegate.delete(key);
     }
 
     @Override
@@ -99,13 +88,7 @@ public class RoleDaoImpl implements RoleDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void batchDelete(List<StringIdKey> keys) throws DaoException {
-        try {
-            for (StringIdKey key : keys) {
-                internalDelete(key);
-            }
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
+        batchDelegate.batchDelete(keys);
     }
 
     @Override
@@ -154,29 +137,20 @@ public class RoleDaoImpl implements RoleDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public List<StringIdKey> lookupDelete(String preset, Object[] objs) throws DaoException {
-        try {
-            DetachedCriteria criteria = DetachedCriteria.forClass(HibernateRole.class);
-            presetDelegate.getPresetCriteriaMaker().makeCriteria(criteria, preset, objs);
-            //noinspection unchecked
-            List<HibernateRole> byCriteria = (List<HibernateRole>) template.findByCriteria(criteria);
-            for (HibernateRole hibernateRole : byCriteria) {
-                hibernateRole.getUsers().clear();
-                template.update(hibernateRole);
-            }
-            template.deleteAll(byCriteria);
-            return byCriteria.stream().map(role -> new StringIdKey(role.getStringId())).collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
+        return presetDelegate.lookupDelete(preset, objs);
     }
 
     @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException {
-
+        relationDelegate.batchAddRelation(roleIdKey, userIdKeys);
     }
 
     @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void removeUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException {
-
+        relationDelegate.batchDeleteRelation(roleIdKey, userIdKeys);
     }
 }

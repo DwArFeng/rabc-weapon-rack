@@ -8,7 +8,7 @@ import com.dwarfeng.rabcwr.stack.bean.dto.UserInfo;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.service.RegisterService;
 import com.dwarfeng.rabcwr.stack.service.UserMaintainService;
-import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;

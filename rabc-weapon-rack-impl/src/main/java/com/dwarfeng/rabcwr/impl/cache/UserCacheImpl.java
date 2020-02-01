@@ -4,7 +4,7 @@ import com.dwarfeng.rabcwr.impl.bean.entity.FastJsonUser;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.cache.UserCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
-import com.dwarfeng.subgrade.sdk.interceptor.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;

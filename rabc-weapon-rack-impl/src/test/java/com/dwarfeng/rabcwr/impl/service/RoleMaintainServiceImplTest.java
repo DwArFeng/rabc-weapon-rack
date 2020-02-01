@@ -72,9 +72,9 @@ public class RoleMaintainServiceImplTest {
             roleMaintainService.insert(admin);
             roleMaintainService.insert(guest);
             roleMaintainService.insert(moderator);
-            userMaintainService.addRoles(zhangSan.getKey(), Arrays.asList(admin.getKey(), moderator.getKey(), guest.getKey()));
-            userMaintainService.addRoles(liSi.getKey(), Arrays.asList(moderator.getKey(), guest.getKey()));
-            userMaintainService.addRoles(wangWu.getKey(), Collections.singletonList(guest.getKey()));
+            roleMaintainService.addUsers(admin.getKey(), Collections.singletonList(zhangSan.getKey()));
+            roleMaintainService.addUsers(moderator.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey()));
+            roleMaintainService.addUsers(guest.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey(), wangWu.getKey()));
 
             //此处用断点观测roles的值，判断是否正确。
             //noinspection unused
@@ -93,10 +93,10 @@ public class RoleMaintainServiceImplTest {
             roles = null;
         } finally {
             if (Objects.nonNull(zhangSan)) userMaintainService.delete(zhangSan.getKey());
-            if (Objects.nonNull(liSi)) userMaintainService.delete(liSi.getKey());
-            if (Objects.nonNull(wangWu)) userMaintainService.delete(wangWu.getKey());
             roleMaintainService.delete(admin.getKey());
+            if (Objects.nonNull(liSi)) userMaintainService.delete(liSi.getKey());
             roleMaintainService.delete(moderator.getKey());
+            if (Objects.nonNull(wangWu)) userMaintainService.delete(wangWu.getKey());
             roleMaintainService.delete(guest.getKey());
         }
     }
