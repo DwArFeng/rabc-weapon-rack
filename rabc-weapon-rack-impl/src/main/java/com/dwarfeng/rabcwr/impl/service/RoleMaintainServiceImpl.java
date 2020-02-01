@@ -2,6 +2,7 @@ package com.dwarfeng.rabcwr.impl.service;
 
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.cache.RoleCache;
+import com.dwarfeng.rabcwr.stack.cache.UserPermissionCache;
 import com.dwarfeng.rabcwr.stack.dao.RoleDao;
 import com.dwarfeng.rabcwr.stack.service.RoleMaintainService;
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
@@ -30,6 +31,8 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Autowired
     private RoleCache roleCache;
+    @Autowired
+    private UserPermissionCache userPermissionCache;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -81,6 +84,8 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
             }
 
+            userPermissionCache.clear();
+
             roleDao.insert(role);
             roleCache.push(role, roleTimeout);
             return role.getKey();
@@ -97,6 +102,9 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
             if (Objects.nonNull(role.getKey()) && !internalExists(role.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
+
+            userPermissionCache.clear();
+
             roleCache.push(role, roleTimeout);
             roleDao.update(role);
         } catch (Exception e) {
@@ -112,6 +120,9 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
             if (!internalExists(key)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
+
+            userPermissionCache.clear();
+
             internalDelete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
@@ -151,6 +162,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     public void lookupDelete(String preset, Object[] objs) throws ServiceException {
         try {
             List<StringIdKey> longIdKeys = roleDao.lookupDelete(preset, objs);
+            userPermissionCache.clear();
             for (StringIdKey longIdKey : longIdKeys) {
                 internalDelete(longIdKey);
             }
@@ -164,6 +176,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
         try {
+            userPermissionCache.clear();
             roleDao.addUsers(roleIdKey, userIdKeys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
@@ -175,6 +188,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void removeUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
         try {
+            userPermissionCache.clear();
             roleDao.removeUsers(roleIdKey, userIdKeys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加角色与用户的关联时发生异常", LogLevel.WARN, sem, e);

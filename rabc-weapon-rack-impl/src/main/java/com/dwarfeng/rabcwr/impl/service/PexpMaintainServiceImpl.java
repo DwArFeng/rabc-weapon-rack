@@ -2,6 +2,7 @@ package com.dwarfeng.rabcwr.impl.service;
 
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.cache.PexpCache;
+import com.dwarfeng.rabcwr.stack.cache.UserPermissionCache;
 import com.dwarfeng.rabcwr.stack.dao.PexpDao;
 import com.dwarfeng.rabcwr.stack.service.PexpMaintainService;
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
@@ -34,6 +35,8 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Autowired
     private PexpCache permissionCache;
+    @Autowired
+    private UserPermissionCache userPermissionCache;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -87,6 +90,9 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
             if (Objects.isNull(permission.getKey())) {
                 permission.setKey(keyFetcher.fetchKey());
             }
+
+            userPermissionCache.clear();
+
             permissionDao.insert(permission);
             permissionCache.push(permission, permissionTimeout);
             return permission.getKey();
@@ -103,6 +109,9 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
             if (Objects.nonNull(permission.getKey()) && !internalExists(permission.getKey())) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
+
+            userPermissionCache.clear();
+
             permissionCache.push(permission, permissionTimeout);
             permissionDao.update(permission);
         } catch (Exception e) {
@@ -118,6 +127,9 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
             if (!internalExists(key)) {
                 throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
             }
+
+            userPermissionCache.clear();
+
             internalDelete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
@@ -157,6 +169,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
     public void lookupDelete(String preset, Object[] objs) throws ServiceException {
         try {
             List<LongIdKey> longIdKeys = permissionDao.lookupDelete(preset, objs);
+            userPermissionCache.clear();
             for (LongIdKey longIdKey : longIdKeys) {
                 internalDelete(longIdKey);
             }

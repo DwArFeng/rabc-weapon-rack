@@ -8,6 +8,7 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Repository
 public class UserPermissionCacheImpl implements UserPermissionCache {
 
+    @Autowired
     private RedisKeyListCache<StringIdKey, Permission, FastJsonPermission> redisKeyListDelegate;
 
     @Override

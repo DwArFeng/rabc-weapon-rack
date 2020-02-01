@@ -2,6 +2,7 @@ package com.dwarfeng.rabcwr.impl.service;
 
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.cache.UserCache;
+import com.dwarfeng.rabcwr.stack.cache.UserPermissionCache;
 import com.dwarfeng.rabcwr.stack.dao.UserDao;
 import com.dwarfeng.rabcwr.stack.service.UserMaintainService;
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
@@ -27,8 +28,11 @@ public class UserMaintainServiceImpl implements UserMaintainService {
 
     @Autowired
     private UserDao userDao;
+
     @Autowired
     private UserCache userCache;
+    @Autowired
+    private UserPermissionCache userPermissionCache;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -163,6 +167,7 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void addRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
         try {
+            userPermissionCache.clear();
             userDao.addRoles(userIdKey, roleIdKeys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
@@ -174,6 +179,7 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public void deleteRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
         try {
+            userPermissionCache.clear();
             userDao.deleteRoles(userIdKey, roleIdKeys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);

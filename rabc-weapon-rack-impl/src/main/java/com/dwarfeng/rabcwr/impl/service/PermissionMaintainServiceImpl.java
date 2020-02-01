@@ -3,6 +3,7 @@ package com.dwarfeng.rabcwr.impl.service;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.cache.PermissionCache;
 import com.dwarfeng.rabcwr.stack.cache.PermissionListCache;
+import com.dwarfeng.rabcwr.stack.cache.UserPermissionCache;
 import com.dwarfeng.rabcwr.stack.dao.PermissionDao;
 import com.dwarfeng.rabcwr.stack.service.PermissionMaintainService;
 import com.dwarfeng.subgrade.sdk.bean.dto.PagingUtil;
@@ -33,6 +34,8 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
     private PermissionCache permissionCache;
     @Autowired
     private PermissionListCache permissionListCache;
+    @Autowired
+    private UserPermissionCache userPermissionCache;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -86,6 +89,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
             }
 
             permissionListCache.clear();
+            userPermissionCache.clear();
 
             permissionDao.insert(permission);
             permissionCache.push(permission, permissionTimeout);
@@ -105,6 +109,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
             }
 
             permissionListCache.clear();
+            userPermissionCache.clear();
 
             permissionCache.push(permission, permissionTimeout);
             permissionDao.update(permission);
@@ -123,6 +128,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
             }
 
             permissionListCache.clear();
+            userPermissionCache.clear();
 
             internalDelete(key);
         } catch (Exception e) {

@@ -10,6 +10,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.impl.cache.RedisListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
@@ -40,6 +41,8 @@ public class CacheConfiguration {
     private String userPrefix;
     @Value("${cache.list.permission}")
     private String permissionListKey;
+    @Value("${cache.list.rabcwr.list.user_has_permission}")
+    private String userPermissionListKey;
 
     @Bean
     public RedisBatchBaseCache<StringIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
@@ -88,6 +91,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
                 new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
+        );
+    }
+
+    @Bean
+    public RedisKeyListCache<StringIdKey, Permission, FastJsonPermission> userPermissionRedisKeyListCache() {
+        //noinspection unchecked
+        return new RedisKeyListCache<>(
+                (RedisTemplate<String, FastJsonPermission>) template,
+                new StringIdStringKeyFormatter(userPrefix),
+                new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
         );
     }
 }
