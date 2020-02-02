@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>rabc-weapon-rack</artifactId>
-    <version>alpha-0.1.0.a</version>
+    <version>alpha-0.1.1.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -60,7 +60,7 @@
         <kafka.version>2.4.0</kafka.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <snowflake.version>1.0.1.b</snowflake.version>
-        <subgrade.version>beta-0.0.8.a</subgrade.version>
+        <subgrade.version>beta-0.1.0.a</subgrade.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
@@ -381,17 +381,17 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>rabc-weapon-rack-stack</artifactId>
-                <version>alpha-0.1.0.a</version>
+                <version>alpha-0.1.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>rabc-weapon-rack-sdk</artifactId>
-                <version>alpha-0.1.0.a</version>
+                <version>alpha-0.1.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>rabc-weapon-rack-impl</artifactId>
-                <version>alpha-0.1.0.a</version>
+                <version>alpha-0.1.1.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -428,5 +428,6 @@
         <module>rabc-weapon-rack-sdk</module>
         <module>rabc-weapon-rack-impl</module>
         <module>rabc-weapon-rack-node</module>
+        <module>rabc-weapon-rack-api</module>
     </modules>
 </project>

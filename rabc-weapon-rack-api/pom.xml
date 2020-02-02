@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -10,8 +10,8 @@
         <version>alpha-0.1.1.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rabc-weapon-rack-impl</artifactId>
-    <name>rabc-weapon-rack-impl</name>
+    <artifactId>rabc-weapon-rack-api</artifactId>
+    <name>rabc-weapon-rack-api</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -124,6 +124,11 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>rabc-weapon-rack-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>rabc-weapon-rack-impl</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
