@@ -22,6 +22,11 @@ public final class ServiceExceptionCodes {
      * 密码错误。
      */
     public static final ServiceException.Code WRONG_PASSWORD = new ServiceException.Code(520, "wrong password");
+    /**
+     * 权限表达式格式错误。
+     */
+    public static final ServiceException.Code PEXP_FORMAT_ERROR = new ServiceException.Code(530, "pexp format error");
+
 
     private ServiceExceptionCodes() {
         throw new IllegalStateException("禁止实例化");

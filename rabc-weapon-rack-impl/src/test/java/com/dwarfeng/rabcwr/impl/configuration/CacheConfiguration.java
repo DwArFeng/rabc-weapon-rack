@@ -39,9 +39,9 @@ public class CacheConfiguration {
     private String rolePrefix;
     @Value("${cache.prefix.entity.user}")
     private String userPrefix;
-    @Value("${cache.list.permission}")
+    @Value("${cache.key.list.permission}")
     private String permissionListKey;
-    @Value("${cache.list.user_has_permission}")
+    @Value("${cache.prefix.list.user_has_permission}")
     private String userPermissionListKey;
 
     @Bean
@@ -99,7 +99,7 @@ public class CacheConfiguration {
         //noinspection unchecked
         return new RedisKeyListCache<>(
                 (RedisTemplate<String, FastJsonPermission>) template,
-                new StringIdStringKeyFormatter(userPrefix),
+                new StringIdStringKeyFormatter(userPermissionListKey),
                 new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
         );
     }
