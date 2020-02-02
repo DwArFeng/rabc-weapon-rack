@@ -7,7 +7,7 @@
     <parent>
         <artifactId>rabc-weapon-rack</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>alpha-0.1.1.a-SNAPSHOT</version>
+        <version>alpha-0.1.1.a</version>
     </parent>
 
     <artifactId>rabc-weapon-rack-api</artifactId>
