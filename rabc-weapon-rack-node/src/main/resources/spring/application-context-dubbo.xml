@@ -29,6 +29,10 @@
                    ref="permissionMaintainServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.rabcwr.stack.service.RegisterService"
                    ref="registerServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.rabcwr.stack.service.PermissionLookupService"
+                   ref="permissionLookupServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.rabcwr.stack.service.LoginService"
+                   ref="loginServiceImpl"/>
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
     <dubbo:reference id="longIdService" interface="com.dwarfeng.sfds.stack.service.LongIdService"/>
