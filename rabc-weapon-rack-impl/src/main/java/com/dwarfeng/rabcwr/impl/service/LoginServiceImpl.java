@@ -47,7 +47,7 @@ public class LoginServiceImpl implements LoginService {
                     userKey,
                     System.currentTimeMillis() + expireTimeout
             );
-            long timeout = System.currentTimeMillis() + (long) (expireTimeout * expireTimeoutFactor);
+            long timeout = (long) (expireTimeout * expireTimeoutFactor);
             loginStateCache.push(loginState, timeout);
             return loginState;
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class LoginServiceImpl implements LoginService {
                 throw new ServiceException(ServiceExceptionCodes.ALREADY_EXPIRED);
             }
             loginState.setExpireDate(System.currentTimeMillis() + expireTimeout);
-            long timeout = System.currentTimeMillis() + (long) (expireTimeout * expireTimeoutFactor);
+            long timeout = (long) (expireTimeout * expireTimeoutFactor);
             loginStateCache.push(loginState, timeout);
             return loginState;
         } catch (Exception e) {
