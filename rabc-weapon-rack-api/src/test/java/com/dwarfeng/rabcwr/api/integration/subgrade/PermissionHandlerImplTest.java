@@ -6,7 +6,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.service.*;
-import com.dwarfeng.subgrade.sdk.interceptor.permission.CheckResult;
+import com.dwarfeng.subgrade.sdk.interceptor.ExceptionContext;
 import com.dwarfeng.subgrade.sdk.interceptor.permission.PermissionRequired;
 import com.dwarfeng.subgrade.sdk.interceptor.permission.RequestUser;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -154,13 +154,13 @@ public class PermissionHandlerImplTest {
             permissionMaintainService.insert(permission9);
 
             //noinspection unused
-            CheckResult checkResult = aopTester.test(zhangSan.getKey().getStringId(), null);
+            ExceptionContext exceptionContext = aopTester.test(zhangSan.getKey(), null);
             //noinspection UnusedAssignment
-            checkResult = aopTester.test(liSi.getKey().getStringId(), null);
+            exceptionContext = aopTester.test(liSi.getKey(), null);
             //noinspection UnusedAssignment
-            checkResult = aopTester.test(wangWu.getKey().getStringId(), null);
+            exceptionContext = aopTester.test(wangWu.getKey(), null);
             //noinspection UnusedAssignment
-            checkResult = null;
+            exceptionContext = null;
         } finally {
             if (Objects.nonNull(zhangSan)) userMaintainService.delete(zhangSan.getKey());
             if (Objects.nonNull(liSi)) userMaintainService.delete(liSi.getKey());
@@ -203,8 +203,8 @@ public class PermissionHandlerImplTest {
                 "permission.c.2",
                 "permission.c.3",
         })
-        public CheckResult test(@RequestUser String userName, CheckResult checkResult) {
-            return checkResult;
+        public ExceptionContext test(@RequestUser StringIdKey userName, ExceptionContext exceptionContext) {
+            return exceptionContext;
         }
 
     }
