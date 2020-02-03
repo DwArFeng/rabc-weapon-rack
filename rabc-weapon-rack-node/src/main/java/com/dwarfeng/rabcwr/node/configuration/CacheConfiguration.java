@@ -1,13 +1,7 @@
 package com.dwarfeng.rabcwr.node.configuration;
 
-import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPermission;
-import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPexp;
-import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonRole;
-import com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonUser;
-import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
-import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
-import com.dwarfeng.rabcwr.stack.bean.entity.Role;
-import com.dwarfeng.rabcwr.stack.bean.entity.User;
+import com.dwarfeng.rabcwr.sdk.bean.entity.*;
+import com.dwarfeng.rabcwr.stack.bean.entity.*;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
@@ -101,6 +95,19 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonPermission>) template,
                 new StringIdStringKeyFormatter(userPermissionListKey),
                 new DozerBeanTransformer<>(Permission.class, FastJsonPermission.class, mapper)
+        );
+    }
+
+    @Value("${cache.prefix.entity.login_state}")
+    private String loginStatePrefix;
+
+    @Bean
+    public RedisBatchBaseCache<LongIdKey, LoginState, FastJsonLoginState> loginStateRedisBatchBaseCache() {
+        //noinspection unchecked
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonLoginState>) template,
+                new LongIdStringKeyFormatter(loginStatePrefix),
+                new DozerBeanTransformer<>(LoginState.class, FastJsonLoginState.class, mapper)
         );
     }
 }

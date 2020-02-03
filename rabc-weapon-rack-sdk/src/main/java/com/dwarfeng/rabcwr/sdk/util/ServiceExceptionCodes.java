@@ -26,6 +26,10 @@ public final class ServiceExceptionCodes {
      * 权限表达式格式错误。
      */
     public static final ServiceException.Code PEXP_FORMAT_ERROR = new ServiceException.Code(530, "pexp format error");
+    /**
+     * 权限表达式格式错误。
+     */
+    public static final ServiceException.Code ALREADY_EXPIRED = new ServiceException.Code(540, "already expired");
 
 
     private ServiceExceptionCodes() {

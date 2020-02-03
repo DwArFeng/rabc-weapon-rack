@@ -20,6 +20,7 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonRole");
         ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPexp");
         ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonPermission");
+        ParserConfig.getGlobalInstance().addAccept("com.dwarfeng.rabcwr.sdk.bean.entity.FastJsonLoginState");
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }
