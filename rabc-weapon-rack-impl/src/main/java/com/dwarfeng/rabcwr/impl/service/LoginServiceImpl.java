@@ -78,6 +78,16 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public LoginState getLoginState(LongIdKey idKey) throws ServiceException {
+        try {
+            if (!loginStateCache.exists(idKey)) throw new ServiceException(ENTITY_NOT_EXIST);
+            return loginStateCache.get(idKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("判断是否登录时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
     public LoginState postpone(LongIdKey idKey) throws ServiceException {
         try {
             if (!loginStateCache.exists(idKey)) {

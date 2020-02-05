@@ -42,6 +42,15 @@ public interface LoginService extends Service {
     boolean isLogin(LongIdKey idKey) throws ServiceException;
 
     /**
+     * 获取指定的登录状态主键对应的登录状态。
+     *
+     * @param idKey 指定登录状态主键。
+     * @return 对应的登录状态。
+     * @throws ServiceException 服务异常。
+     */
+    LoginState getLoginState(LongIdKey idKey) throws ServiceException;
+
+    /**
      * 延长指定登录状态主键的超时日期。
      *
      * @param idKey 指定的登录状态主键。
