@@ -84,16 +84,80 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
     @Transactional(transactionManager = "hibernateTransactionManager")
     public StringIdKey insert(Permission permission) throws ServiceException {
         try {
-            if (Objects.nonNull(permission.getKey()) && internalExists(permission.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+            return internalInsert(permission);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private StringIdKey internalInsert(Permission permission) throws Exception {
+        if (Objects.nonNull(permission.getKey()) && internalExists(permission.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        permissionListCache.clear();
+        userPermissionCache.clear();
+
+        permissionDao.insert(permission);
+        permissionCache.push(permission, permissionTimeout);
+        return permission.getKey();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void update(Permission permission) throws ServiceException {
+        try {
+            internalUpdate(permission);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalUpdate(Permission permission) throws Exception {
+        if (Objects.nonNull(permission.getKey()) && !internalExists(permission.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        permissionListCache.clear();
+        userPermissionCache.clear();
+
+        permissionCache.push(permission, permissionTimeout);
+        permissionDao.update(permission);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(StringIdKey key) throws ServiceException {
+        try {
+            internalDelete(key);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalDelete(StringIdKey key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        permissionListCache.clear();
+        userPermissionCache.clear();
+
+        permissionDao.delete(key);
+        permissionCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertIfNotExists(Permission permission) throws ServiceException {
+        try {
+            if (Objects.isNull(permission.getKey()) || !internalExists(permission.getKey())) {
+                return internalInsert(permission);
             }
-
-            permissionListCache.clear();
-            userPermissionCache.clear();
-
-            permissionDao.insert(permission);
-            permissionCache.push(permission, permissionTimeout);
-            return permission.getKey();
+            return null;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -102,17 +166,11 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void update(Permission permission) throws ServiceException {
+    public void updateIfExists(Permission permission) throws ServiceException {
         try {
-            if (Objects.nonNull(permission.getKey()) && !internalExists(permission.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(permission.getKey())) {
+                internalUpdate(permission);
             }
-
-            permissionListCache.clear();
-            userPermissionCache.clear();
-
-            permissionCache.push(permission, permissionTimeout);
-            permissionDao.update(permission);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -121,24 +179,30 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void delete(StringIdKey key) throws ServiceException {
+    public void deleteIfExists(StringIdKey key) throws ServiceException {
         try {
-            if (!internalExists(key)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(key)) {
+                internalDelete(key);
             }
-
-            permissionListCache.clear();
-            userPermissionCache.clear();
-
-            internalDelete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
         }
     }
 
-    private void internalDelete(StringIdKey key) throws Exception {
-        permissionDao.delete(key);
-        permissionCache.delete(key);
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertOrUpdate(Permission permission) throws ServiceException {
+        try {
+            if (internalExists(permission.getKey())) {
+                internalUpdate(permission);
+                return null;
+            } else {
+                return internalInsert(permission);
+            }
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override

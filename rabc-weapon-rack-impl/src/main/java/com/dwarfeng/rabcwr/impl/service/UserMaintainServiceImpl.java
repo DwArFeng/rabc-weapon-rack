@@ -80,13 +80,70 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public StringIdKey insert(User user) throws ServiceException {
         try {
-            if (Objects.nonNull(user.getKey()) && internalExists(user.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
-            }
+            return internalInsert(user);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
 
-            userDao.insert(user);
-            userCache.push(user, userTimeout);
-            return user.getKey();
+    private StringIdKey internalInsert(User user) throws Exception {
+        if (Objects.nonNull(user.getKey()) && internalExists(user.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        userDao.insert(user);
+        userCache.push(user, userTimeout);
+        return user.getKey();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void update(User user) throws ServiceException {
+        try {
+            internalUpdate(user);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalUpdate(User user) throws Exception {
+        if (Objects.nonNull(user.getKey()) && !internalExists(user.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+        userCache.push(user, userTimeout);
+        userDao.update(user);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(StringIdKey key) throws ServiceException {
+        try {
+            internalDelete(key);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalDelete(StringIdKey key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        userDao.delete(key);
+        userCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertIfNotExists(User user) throws ServiceException {
+        try {
+            if (Objects.isNull(user.getKey()) || !internalExists(user.getKey())) {
+                return internalInsert(user);
+            }
+            return null;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -95,13 +152,11 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void update(User user) throws ServiceException {
+    public void updateIfExists(User user) throws ServiceException {
         try {
-            if (Objects.nonNull(user.getKey()) && !internalExists(user.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(user.getKey())) {
+                internalUpdate(user);
             }
-            userCache.push(user, userTimeout);
-            userDao.update(user);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -110,20 +165,30 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void delete(StringIdKey key) throws ServiceException {
+    public void deleteIfExists(StringIdKey key) throws ServiceException {
         try {
-            if (!internalExists(key)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(key)) {
+                internalDelete(key);
             }
-            internalDelete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
         }
     }
 
-    private void internalDelete(StringIdKey key) throws Exception {
-        userDao.delete(key);
-        userCache.delete(key);
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertOrUpdate(User user) throws ServiceException {
+        try {
+            if (internalExists(user.getKey())) {
+                internalUpdate(user);
+                return null;
+            } else {
+                return internalInsert(user);
+            }
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override

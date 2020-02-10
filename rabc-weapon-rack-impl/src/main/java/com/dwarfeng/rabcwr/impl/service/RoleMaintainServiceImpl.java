@@ -80,15 +80,77 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public StringIdKey insert(Role role) throws ServiceException {
         try {
-            if (Objects.nonNull(role.getKey()) && internalExists(role.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+            return internalInsert(role);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private StringIdKey internalInsert(Role role) throws Exception {
+        if (Objects.nonNull(role.getKey()) && internalExists(role.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_EXISTED);
+        }
+
+        userPermissionCache.clear();
+
+        roleDao.insert(role);
+        roleCache.push(role, roleTimeout);
+        return role.getKey();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void update(Role role) throws ServiceException {
+        try {
+            internalUpdate(role);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalUpdate(Role role) throws Exception {
+        if (Objects.nonNull(role.getKey()) && !internalExists(role.getKey())) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        userPermissionCache.clear();
+
+        roleCache.push(role, roleTimeout);
+        roleDao.update(role);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void delete(StringIdKey key) throws ServiceException {
+        try {
+            internalDelete(key);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private void internalDelete(StringIdKey key) throws Exception {
+        if (!internalExists(key)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+
+        userPermissionCache.clear();
+
+        roleDao.delete(key);
+        roleCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertIfNotExists(Role role) throws ServiceException {
+        try {
+            if (Objects.isNull(role.getKey()) || !internalExists(role.getKey())) {
+                return internalInsert(role);
             }
-
-            userPermissionCache.clear();
-
-            roleDao.insert(role);
-            roleCache.push(role, roleTimeout);
-            return role.getKey();
+            return null;
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("插入实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -97,16 +159,11 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void update(Role role) throws ServiceException {
+    public void updateIfExists(Role role) throws ServiceException {
         try {
-            if (Objects.nonNull(role.getKey()) && !internalExists(role.getKey())) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(role.getKey())) {
+                internalUpdate(role);
             }
-
-            userPermissionCache.clear();
-
-            roleCache.push(role, roleTimeout);
-            roleDao.update(role);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新实体时发生异常", LogLevel.WARN, sem, e);
         }
@@ -115,23 +172,30 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void delete(StringIdKey key) throws ServiceException {
+    public void deleteIfExists(StringIdKey key) throws ServiceException {
         try {
-            if (!internalExists(key)) {
-                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            if (internalExists(key)) {
+                internalDelete(key);
             }
-
-            userPermissionCache.clear();
-
-            internalDelete(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("删除实体时发生异常", LogLevel.WARN, sem, e);
         }
     }
 
-    private void internalDelete(StringIdKey key) throws Exception {
-        roleDao.delete(key);
-        roleCache.delete(key);
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public StringIdKey insertOrUpdate(Role role) throws ServiceException {
+        try {
+            if (internalExists(role.getKey())) {
+                internalUpdate(role);
+                return null;
+            } else {
+                return internalInsert(role);
+            }
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("插入或更新实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override
