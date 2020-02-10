@@ -80,8 +80,8 @@ public class LoginPermHandlerImpl implements LoginPermHandler {
     @Override
     public boolean hasPermission(LongIdKey idKey, String permissionNode) throws HandlerException {
         try {
-            StringIdKey userName = loginService.getLoginState(idKey).getUserKey();
-            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userName).stream().map(Permission::getKey)
+            StringIdKey userKey = loginService.getLoginState(idKey).getUserKey();
+            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userKey).stream().map(Permission::getKey)
                     .map(StringIdKey::getStringId).collect(Collectors.toList());
             return ownedPermissionNodes.contains(permissionNode);
         } catch (Exception e) {
@@ -92,8 +92,8 @@ public class LoginPermHandlerImpl implements LoginPermHandler {
     @Override
     public boolean hasPermission(LongIdKey idKey, List<String> permissionNodes) throws HandlerException {
         try {
-            StringIdKey userName = loginService.getLoginState(idKey).getUserKey();
-            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userName).stream().map(Permission::getKey)
+            StringIdKey userKey = loginService.getLoginState(idKey).getUserKey();
+            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userKey).stream().map(Permission::getKey)
                     .map(StringIdKey::getStringId).collect(Collectors.toList());
             return ownedPermissionNodes.containsAll(permissionNodes);
         } catch (Exception e) {
@@ -104,8 +104,8 @@ public class LoginPermHandlerImpl implements LoginPermHandler {
     @Override
     public List<String> getMissingPermission(LongIdKey idKey, List<String> permissionNodes) throws HandlerException {
         try {
-            StringIdKey userName = loginService.getLoginState(idKey).getUserKey();
-            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userName).stream().map(Permission::getKey)
+            StringIdKey userKey = loginService.getLoginState(idKey).getUserKey();
+            List<String> ownedPermissionNodes = permissionLookupService.lookupPermissions(userKey).stream().map(Permission::getKey)
                     .map(StringIdKey::getStringId).collect(Collectors.toList());
             List<String> dejavu = new ArrayList<>(permissionNodes);
             dejavu.removeAll(ownedPermissionNodes);

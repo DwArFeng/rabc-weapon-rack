@@ -203,7 +203,7 @@ public class PermissionHandlerImplTest {
                 "permission.c.2",
                 "permission.c.3",
         })
-        public ExceptionContext test(@RequestUser StringIdKey userName, ExceptionContext exceptionContext) {
+        public ExceptionContext test(@RequestUser StringIdKey userKey, ExceptionContext exceptionContext) {
             return exceptionContext;
         }
 

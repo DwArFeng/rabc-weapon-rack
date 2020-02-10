@@ -15,10 +15,6 @@ public class ValidationUserInfo implements Serializable {
     @NotNull(groups = {Default.class, Insert.class})
     private String id;
 
-    @NotNull(groups = {Default.class, Insert.class})
-    @Length(max = Constraints.LENGTH_NAME, groups = {Default.class, Insert.class})
-    private String name;
-
     private boolean enabled;
 
     @Length(max = Constraints.LENGTH_REMARK, groups = {Default.class, Insert.class})
@@ -33,14 +29,6 @@ public class ValidationUserInfo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean isEnabled() {
@@ -63,7 +51,6 @@ public class ValidationUserInfo implements Serializable {
     public String toString() {
         return "ValidationUserInfo{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
                 ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';

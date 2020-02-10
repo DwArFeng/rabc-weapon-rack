@@ -11,16 +11,13 @@ public class FastJsonUser implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private FastJsonStringIdKey key;
 
-    @JSONField(name = "name", ordinal = 2)
-    private String name;
-
-    @JSONField(name = "password", ordinal = 3)
+    @JSONField(name = "password", ordinal = 2)
     private String password;
 
-    @JSONField(name = "enabled", ordinal = 4)
+    @JSONField(name = "enabled", ordinal = 3)
     private boolean enabled;
 
-    @JSONField(name = "remark", ordinal = 5)
+    @JSONField(name = "remark", ordinal = 4)
     private String remark;
 
     public FastJsonUser() {
@@ -32,14 +29,6 @@ public class FastJsonUser implements Bean {
 
     public void setKey(FastJsonStringIdKey key) {
         this.key = key;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -70,7 +59,6 @@ public class FastJsonUser implements Bean {
     public String toString() {
         return "JsonUser{" +
                 "key=" + key +
-                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled='" + enabled + '\'' +
                 ", remark='" + remark + '\'' +

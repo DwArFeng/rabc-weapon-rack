@@ -13,10 +13,6 @@ public final class Constraints {
      */
     public static final int LENGTH_ID = 100;
     /**
-     * 名称的长度约束。
-     */
-    public static final int LENGTH_NAME = 50;
-    /**
      * 备注的长度约束。
      */
     public static final int LENGTH_REMARK = 100;

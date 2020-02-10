@@ -7,7 +7,6 @@ public class UserInfo implements Dto {
     private static final long serialVersionUID = -7247213260626039980L;
 
     private String id;
-    private String name;
     private boolean enabled;
     private String remark;
 
@@ -16,7 +15,6 @@ public class UserInfo implements Dto {
 
     public UserInfo(String id, String name, boolean enabled, String remark) {
         this.id = id;
-        this.name = name;
         this.enabled = enabled;
         this.remark = remark;
     }
@@ -27,14 +25,6 @@ public class UserInfo implements Dto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean isEnabled() {
@@ -57,7 +47,6 @@ public class UserInfo implements Dto {
     public String toString() {
         return "UserInfo{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
                 ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';

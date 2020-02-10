@@ -22,16 +22,13 @@ public class HibernateUser implements Bean {
     private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @Column(name = "name", length = Constraints.LENGTH_NAME, nullable = false)
-    private String name;
-
-    @Column(name = "password", columnDefinition = "CHAR(60)", nullable = true)
+    @Column(name = "password", columnDefinition = "CHAR(60)", nullable = false)
     private String password;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @Column(name = "remark", length = Constraints.LENGTH_REMARK, nullable = true)
+    @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
     // -----------------------------------------------------------多对多-----------------------------------------------------------
@@ -55,14 +52,6 @@ public class HibernateUser implements Bean {
 
     public void setStringId(String stringId) {
         this.stringId = stringId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -101,7 +90,6 @@ public class HibernateUser implements Bean {
     public String toString() {
         return "HibernateUser{" +
                 "stringId='" + stringId + '\'' +
-                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +

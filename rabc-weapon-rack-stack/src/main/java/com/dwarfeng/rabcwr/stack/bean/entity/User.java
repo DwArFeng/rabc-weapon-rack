@@ -14,7 +14,6 @@ public class User implements Entity<StringIdKey> {
     private static final long serialVersionUID = -7166808835407200393L;
 
     private StringIdKey key;
-    private String name;
     private String password;
     private boolean enabled;
     private String remark;
@@ -22,9 +21,8 @@ public class User implements Entity<StringIdKey> {
     public User() {
     }
 
-    public User(StringIdKey key, String name, String password, boolean enabled, String remark) {
+    public User(StringIdKey key, String password, boolean enabled, String remark) {
         this.key = key;
-        this.name = name;
         this.password = password;
         this.enabled = enabled;
         this.remark = remark;
@@ -38,14 +36,6 @@ public class User implements Entity<StringIdKey> {
     @Override
     public void setKey(StringIdKey key) {
         this.key = key;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -76,7 +66,6 @@ public class User implements Entity<StringIdKey> {
     public String toString() {
         return "User{" +
                 "key=" + key +
-                ", name=" + name +
                 ", password='" + password + '\'' +
                 ", enabled='" + enabled + '\'' +
                 ", remark='" + remark + '\'' +

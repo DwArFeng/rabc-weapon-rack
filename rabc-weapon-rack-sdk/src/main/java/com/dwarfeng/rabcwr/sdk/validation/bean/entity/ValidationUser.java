@@ -18,10 +18,6 @@ public class ValidationUser implements Serializable {
     @Valid
     private ValidationLongIdKey key;
 
-    @NotNull(groups = {Default.class, Insert.class})
-    @Length(max = Constraints.LENGTH_NAME, groups = {Default.class, Insert.class})
-    private String name;
-
     @Length(min = Constraints.LENGTH_PASSWORD, max = Constraints.LENGTH_PASSWORD, groups = {Default.class, Insert.class})
     private String password;
 
@@ -39,14 +35,6 @@ public class ValidationUser implements Serializable {
 
     public void setKey(ValidationLongIdKey key) {
         this.key = key;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -77,7 +65,6 @@ public class ValidationUser implements Serializable {
     public String toString() {
         return "ValidationUser{" +
                 "key=" + key +
-                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +

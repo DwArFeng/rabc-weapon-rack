@@ -39,7 +39,7 @@ public class RegisterServiceImpl implements RegisterService {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
     public User register(@NotNull RegisterInfo registerInfo) throws ServiceException {
-        LOGGER.info("注册新用户 ID=" + registerInfo.getId() + ", 名称=" + registerInfo.getName() + " ...");
+        LOGGER.info("注册新用户 ID=" + registerInfo.getId() + " ...");
         StringIdKey stringIdKey = new StringIdKey(registerInfo.getId());
         try {
             if (userMaintainService.exists(stringIdKey)) {
@@ -49,7 +49,6 @@ public class RegisterServiceImpl implements RegisterService {
             String password = BCrypt.hashpw(registerInfo.getPassword(), BCrypt.gensalt(logRounds));
             User user = new User(
                     stringIdKey,
-                    registerInfo.getName(),
                     password,
                     true,
                     registerInfo.getRemark()
@@ -84,9 +83,9 @@ public class RegisterServiceImpl implements RegisterService {
             //获取用户的详细信息。
             User user = userMaintainService.get(stringIdKey);
             if (BCrypt.checkpw(passwordInfo.getOldPassword(), user.getPassword())) {
-                LOGGER.info("用户 ID=" + user.getKey().getStringId() + ", 名称=" + user.getName() + " 密码验证成功，将更新密码...");
+                LOGGER.info("用户 ID=" + user.getKey().getStringId() + " 密码验证成功，将更新密码...");
             } else {
-                LOGGER.warn("用户 ID=" + user.getKey().getStringId() + ", 名称=" + user.getName() + " 密码验证失败，将会抛出异常...");
+                LOGGER.warn("用户 ID=" + user.getKey().getStringId() + " 密码验证失败，将会抛出异常...");
                 throw new ServiceException(ServiceExceptionCodes.WRONG_PASSWORD);
             }
             //3. 将用户的密码设置为新密码，并更新用户。
@@ -148,7 +147,6 @@ public class RegisterServiceImpl implements RegisterService {
             //2. 设置用户信息为指定的信息，并更新用户。
             //获取用户的详细信息。
             User user = userMaintainService.get(stringIdKey);
-            user.setName(userInfo.getName());
             user.setEnabled(user.getEnabled());
             user.setRemark(userInfo.getRemark());
             userMaintainService.update(user);
@@ -179,10 +177,10 @@ public class RegisterServiceImpl implements RegisterService {
             //获取用户的详细信息。
             User user = userMaintainService.get(stringIdKey);
             if (BCrypt.checkpw(password, user.getPassword())) {
-                LOGGER.info("用户 ID=" + user.getKey().getStringId() + ", 名称=" + user.getName() + " 密码验证成功...");
+                LOGGER.info("用户 ID=" + user.getKey().getStringId() + " 密码验证成功...");
                 return true;
             } else {
-                LOGGER.warn("用户 ID=" + user.getKey().getStringId() + ", 名称=" + user.getName() + " 密码验证失败...");
+                LOGGER.warn("用户 ID=" + user.getKey().getStringId() + " 密码验证失败...");
                 return false;
             }
         } catch (Exception e) {
