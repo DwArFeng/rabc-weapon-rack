@@ -104,12 +104,10 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>${subgrade.version}</version>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
-            <version>${subgrade.version}</version>
         </dependency>
         <!-- 程序自身模块 -->
         <dependency>

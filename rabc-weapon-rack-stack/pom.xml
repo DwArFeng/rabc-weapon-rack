@@ -27,7 +27,6 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-stack</artifactId>
-            <version>${subgrade.version}</version>
         </dependency>
     </dependencies>
 </project>
