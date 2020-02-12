@@ -1,6 +1,5 @@
 package com.dwarfeng.rabcwr.api.integration.subgrade;
 
-import com.dwarfeng.rabcwr.stack.bean.dto.RegisterInfo;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
@@ -33,8 +32,6 @@ public class PermissionHandlerImplTest {
     @Autowired
     private RoleMaintainService roleMaintainService;
     @Autowired
-    private RegisterService registerService;
-    @Autowired
     private PexpMaintainService pexpMaintainService;
     @Autowired
     private PermissionMaintainService permissionMaintainService;
@@ -43,9 +40,9 @@ public class PermissionHandlerImplTest {
     @Autowired
     private AopTester aopTester;
 
-    private RegisterInfo zhangSanReg;
-    private RegisterInfo liSiReg;
-    private RegisterInfo wangWuReg;
+    private User zhangSan;
+    private User liSi;
+    private User wangWu;
 
     private Role roleA;
     private Role roleB;
@@ -70,9 +67,9 @@ public class PermissionHandlerImplTest {
 
     @Before
     public void setUp() {
-        zhangSanReg = new RegisterInfo("zhang_san", "张三", "ninja123456", "测试用账号");
-        liSiReg = new RegisterInfo("li_si", "李四", "ninja123456", "测试用账号");
-        wangWuReg = new RegisterInfo("wang_wu", "王五", "ninja123456", "测试用账号");
+        zhangSan = new User(new StringIdKey("zhang_san"), "测试用账号");
+        liSi = new User(new StringIdKey("li_si"), "测试用账号");
+        wangWu = new User(new StringIdKey("wang_wu"), "测试用账号");
         roleA = new Role(new StringIdKey("role.a"), true, "测试用角色");
         roleB = new Role(new StringIdKey("role.b"), false, "测试用角色");
         roleC = new Role(new StringIdKey("role.c"), true, "测试用角色");
@@ -95,9 +92,9 @@ public class PermissionHandlerImplTest {
 
     @After
     public void tearDown() {
-        zhangSanReg = null;
-        liSiReg = null;
-        wangWuReg = null;
+        zhangSan = null;
+        liSi = null;
+        wangWu = null;
         roleA = null;
         roleB = null;
         roleC = null;
@@ -120,13 +117,10 @@ public class PermissionHandlerImplTest {
 
     @Test
     public void test() throws Exception {
-        User zhangSan = null;
-        User liSi = null;
-        User wangWu = null;
         try {
-            zhangSan = registerService.register(zhangSanReg);
-            liSi = registerService.register(liSiReg);
-            wangWu = registerService.register(wangWuReg);
+            userMaintainService.insert(zhangSan);
+            userMaintainService.insert(liSi);
+            userMaintainService.insert(wangWu);
 
             roleMaintainService.insert(roleA);
             roleMaintainService.insert(roleB);

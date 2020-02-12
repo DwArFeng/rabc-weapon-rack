@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,10 +68,6 @@ public class PermissionLookupServiceImpl implements PermissionLookupService {
         }
         // 获取用户的详细信息。
         User user = userMaintainService.get(userKey);
-        if (!user.getEnabled()) {
-            LOGGER.debug("指定的用户 " + userKey.toString() + "未生效，将返回空的权限列表...");
-            return Collections.emptyList();
-        }
         // 获取用户有效的权限表达式。
         List<StringIdKey> roleKeys = roleMaintainService.lookup(RoleMaintainService.ENABLED_ROLE_FOR_USER, new Object[]{userKey}).getData()
                 .stream().map(Role::getKey).collect(Collectors.toList());

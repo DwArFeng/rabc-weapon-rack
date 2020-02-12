@@ -1,9 +1,7 @@
 package com.dwarfeng.rabcwr.impl.service;
 
-import com.dwarfeng.rabcwr.stack.bean.dto.RegisterInfo;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
-import com.dwarfeng.rabcwr.stack.service.RegisterService;
 import com.dwarfeng.rabcwr.stack.service.RoleMaintainService;
 import com.dwarfeng.rabcwr.stack.service.UserMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -29,12 +27,10 @@ public class RoleMaintainServiceImplTest {
     private UserMaintainService userMaintainService;
     @Autowired
     private RoleMaintainService roleMaintainService;
-    @Autowired
-    private RegisterService registerService;
 
-    private RegisterInfo zhangSanReg;
-    private RegisterInfo liSiReg;
-    private RegisterInfo wangWuReg;
+    private User zhangSan;
+    private User liSi;
+    private User wangWu;
 
     private Role admin;
     private Role guest;
@@ -42,9 +38,9 @@ public class RoleMaintainServiceImplTest {
 
     @Before
     public void setUp() {
-        zhangSanReg = new RegisterInfo("zhang_san", "张三", "ninja123456", "测试用账号");
-        liSiReg = new RegisterInfo("li_si", "李四", "ninja123456", "测试用账号");
-        wangWuReg = new RegisterInfo("wang_wu", "王五", "ninja123456", "测试用账号");
+        zhangSan = new User(new StringIdKey("zhang_san"), "测试用账号");
+        liSi = new User(new StringIdKey("li_si"), "测试用账号");
+        wangWu = new User(new StringIdKey("wang_wu"), "测试用账号");
         admin = new Role(new StringIdKey("admin"), true, "测试用角色");
         guest = new Role(new StringIdKey("guest"), false, "测试用角色");
         moderator = new Role(new StringIdKey("moderator"), true, "测试用角色");
@@ -52,23 +48,21 @@ public class RoleMaintainServiceImplTest {
 
     @After
     public void tearDown() {
-        zhangSanReg = null;
-        liSiReg = null;
-        wangWuReg = null;
+        zhangSan = null;
+        liSi = null;
+        wangWu = null;
         admin = null;
         guest = null;
         moderator = null;
     }
 
+
     @Test
     public void test() throws ServiceException {
-        User zhangSan = null;
-        User liSi = null;
-        User wangWu = null;
         try {
-            zhangSan = registerService.register(zhangSanReg);
-            liSi = registerService.register(liSiReg);
-            wangWu = registerService.register(wangWuReg);
+            userMaintainService.insert(zhangSan);
+            userMaintainService.insert(liSi);
+            userMaintainService.insert(wangWu);
             roleMaintainService.insert(admin);
             roleMaintainService.insert(guest);
             roleMaintainService.insert(moderator);

@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = 6069180993822366758L;
+    private static final long serialVersionUID = 6810263148014147989L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -22,12 +22,6 @@ public class HibernateUser implements Bean {
     private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @Column(name = "password", columnDefinition = "CHAR(60)", nullable = false)
-    private String password;
-
-    @Column(name = "enabled", nullable = false)
-    private boolean enabled;
-
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
@@ -54,22 +48,6 @@ public class HibernateUser implements Bean {
         this.stringId = stringId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -90,8 +68,6 @@ public class HibernateUser implements Bean {
     public String toString() {
         return "HibernateUser{" +
                 "stringId='" + stringId + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
                 ", remark='" + remark + '\'' +
                 '}';
     }
