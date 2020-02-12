@@ -64,18 +64,22 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Pexp get(LongIdKey key) throws ServiceException {
         try {
-            if (permissionCache.exists(key)) {
-                return permissionCache.get(key);
-            } else {
-                if (!permissionDao.exists(key)) {
-                    throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
-                }
-                Pexp permission = permissionDao.get(key);
-                permissionCache.push(permission, permissionTimeout);
-                return permission;
-            }
+            return internalGet(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private Pexp internalGet(LongIdKey key) throws Exception {
+        if (permissionCache.exists(key)) {
+            return permissionCache.get(key);
+        } else {
+            if (!permissionDao.exists(key)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+            Pexp permission = permissionDao.get(key);
+            permissionCache.push(permission, permissionTimeout);
+            return permission;
         }
     }
 
@@ -147,6 +151,17 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
         permissionDao.delete(key);
         permissionCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Pexp getIfExists(LongIdKey key) throws ServiceException {
+        try {
+            return internalExists(key) ? internalGet(key) : null;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override

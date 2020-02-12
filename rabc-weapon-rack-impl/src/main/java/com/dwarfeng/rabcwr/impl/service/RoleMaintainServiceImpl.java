@@ -60,18 +60,22 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Role get(StringIdKey key) throws ServiceException {
         try {
-            if (roleCache.exists(key)) {
-                return roleCache.get(key);
-            } else {
-                if (!roleDao.exists(key)) {
-                    throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
-                }
-                Role role = roleDao.get(key);
-                roleCache.push(role, roleTimeout);
-                return role;
-            }
+            return internalGet(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private Role internalGet(StringIdKey key) throws Exception {
+        if (roleCache.exists(key)) {
+            return roleCache.get(key);
+        } else {
+            if (!roleDao.exists(key)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+            Role role = roleDao.get(key);
+            roleCache.push(role, roleTimeout);
+            return role;
         }
     }
 
@@ -140,6 +144,17 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
         roleDao.delete(key);
         roleCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public Role getIfExists(StringIdKey key) throws ServiceException {
+        try {
+            return internalExists(key) ? internalGet(key) : null;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override

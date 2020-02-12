@@ -60,18 +60,22 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public User get(StringIdKey key) throws ServiceException {
         try {
-            if (userCache.exists(key)) {
-                return userCache.get(key);
-            } else {
-                if (!userDao.exists(key)) {
-                    throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
-                }
-                User user = userDao.get(key);
-                userCache.push(user, userTimeout);
-                return user;
-            }
+            return internalGet(key);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    private User internalGet(StringIdKey key) throws Exception {
+        if (userCache.exists(key)) {
+            return userCache.get(key);
+        } else {
+            if (!userDao.exists(key)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+            User user = userDao.get(key);
+            userCache.push(user, userTimeout);
+            return user;
         }
     }
 
@@ -133,6 +137,17 @@ public class UserMaintainServiceImpl implements UserMaintainService {
 
         userDao.delete(key);
         userCache.delete(key);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public User getIfExists(StringIdKey key) throws ServiceException {
+        try {
+            return internalExists(key) ? internalGet(key) : null;
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("获取实体时发生异常", LogLevel.WARN, sem, e);
+        }
     }
 
     @Override

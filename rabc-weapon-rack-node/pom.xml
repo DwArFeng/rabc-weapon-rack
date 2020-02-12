@@ -147,6 +147,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Maven 打包插件，用于打可以运行的jar包。 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>  
+                        <manifest>  
+                             <addClasspath>true</addClasspath>  
+                             <classpathPrefix>./</classpathPrefix>  
+                             <mainClass>com.dwarfeng.rabcwr.node.launcher.Launcher</mainClass>  
+                        </manifest>
+                    </archive>
+                    <finalName>${project.name}-${project.version}</finalName>
+                </configuration>
+            </plugin>
         </plugins>
         <!-- 配置资源目录 -->
         <resources>
