@@ -4,6 +4,22 @@
 
 #### 功能构建
 
+- 为dubbo框架配置dubbo.host属性。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
+### Release_1.2.0_20200213_build_A
+
+#### 功能构建
+
 - ExceptionCode引入偏移量。
 - subgrade版本变更为beta-0.2.0.b。
 - ExceptionCode偏移量可配置化。
