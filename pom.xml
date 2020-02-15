@@ -60,7 +60,7 @@
         <kafka.version>2.4.0</kafka.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <snowflake.version>1.2.0.a</snowflake.version>
-        <subgrade.version>beta-0.2.0.b</subgrade.version>
+        <subgrade.version>beta-0.2.1.a</subgrade.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>

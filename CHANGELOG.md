@@ -10,6 +10,7 @@
 
 - 修复ExceptionCodeOffsetConfiguration配置中的错误。
 - 移除PermissionLookupServiceImpl.java代码中未使用的局部变量。
+- 升级subgrade至beta-0.2.1.a以避免bug。
 
 #### 功能移除
 
