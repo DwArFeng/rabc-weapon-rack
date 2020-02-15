@@ -18,7 +18,7 @@
     <!--扫描配置类所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.rabcwr.node.configuration"/>
     <!--扫描SnowFlakeLongIdKeyFetcher所在的包。 -->
-    <context:component-scan base-package="com.dwarfeng.sfds.integration.subgrade"/>
+    <context:component-scan base-package="com.dwarfeng.sfds.api.integration.subgrade"/>
     <!--扫描aop增强所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
 </beans>
