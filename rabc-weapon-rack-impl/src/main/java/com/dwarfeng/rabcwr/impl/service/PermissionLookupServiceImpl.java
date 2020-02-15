@@ -4,7 +4,6 @@ import com.dwarfeng.rabcwr.sdk.util.ServiceExceptionCodes;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
-import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.cache.UserPermissionCache;
 import com.dwarfeng.rabcwr.stack.handler.PexpHandler;
 import com.dwarfeng.rabcwr.stack.service.*;
@@ -66,8 +65,6 @@ public class PermissionLookupServiceImpl implements PermissionLookupService {
             LOGGER.warn("指定的用户 " + userKey.toString() + " 不存在, 将抛出异常...");
             throw new ServiceException(ServiceExceptionCodes.USER_NOT_EXISTS);
         }
-        // 获取用户的详细信息。
-        User user = userMaintainService.get(userKey);
         // 获取用户有效的权限表达式。
         List<StringIdKey> roleKeys = roleMaintainService.lookup(RoleMaintainService.ENABLED_ROLE_FOR_USER, new Object[]{userKey}).getData()
                 .stream().map(Role::getKey).collect(Collectors.toList());
