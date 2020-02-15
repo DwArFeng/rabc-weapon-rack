@@ -1,14 +1,15 @@
 # ChangeLog
 
-### Release_1.3.0_20200215_build_A
+### Release_1.2.0_20200215_build_C
 
 #### 功能构建
 
-- (无)
+- snowflake依赖升级至1.2.0.a。
 
 #### Bug修复
 
 - 修复ExceptionCodeOffsetConfiguration配置中的错误。
+- 移除PermissionLookupServiceImpl.java代码中未使用的局部变量。
 
 #### 功能移除
 

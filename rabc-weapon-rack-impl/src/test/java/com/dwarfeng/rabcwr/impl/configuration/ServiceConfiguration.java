@@ -4,7 +4,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
-import com.dwarfeng.sfds.integration.subgrade.SnowFlakeLongIdKeyFetcher;
+import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.GeneralCrudService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
