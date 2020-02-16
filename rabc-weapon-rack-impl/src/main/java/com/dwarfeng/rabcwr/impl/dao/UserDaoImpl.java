@@ -6,6 +6,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.dao.UserDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -27,6 +28,8 @@ public class UserDaoImpl implements UserDao {
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, User, HibernateUser> batchDelegate;
     @Autowired
     private HibernatePresetLookupDao<User, HibernateUser> presetDelegate;
+    @Autowired
+    private HibernateEntireLookupDao<User, HibernateUser> entireLookupDelegate;
     @Autowired
     private HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateUser, HibernateRole> relationDelegate;
 
@@ -124,6 +127,27 @@ public class UserDaoImpl implements UserDao {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public List<User> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         return presetDelegate.lookup(preset, objs, pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<User> lookup() throws DaoException {
+        return entireLookupDelegate.lookup();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<User> lookup(PagingInfo pagingInfo) throws DaoException {
+        return entireLookupDelegate.lookup(pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public int lookupCount() throws DaoException {
+        return entireLookupDelegate.lookupCount();
     }
 
     @Override

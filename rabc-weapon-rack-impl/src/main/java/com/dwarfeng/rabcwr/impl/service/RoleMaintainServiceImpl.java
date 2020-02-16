@@ -258,4 +258,22 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
             throw ServiceExceptionHelper.logAndThrow("添加角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
         }
     }
+
+    @Override
+    public PagedData<Role> lookup() throws ServiceException {
+        try {
+            return PagingUtil.pagedData(roleDao.lookup());
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    public PagedData<Role> lookup(PagingInfo pagingInfo) throws ServiceException {
+        try {
+            return PagingUtil.pagedData(pagingInfo, roleDao.lookupCount(), roleDao.lookup(pagingInfo));
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.dao.RoleDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -27,6 +28,8 @@ public class RoleDaoImpl implements RoleDao {
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Role, HibernateRole> batchDelegate;
     @Autowired
     private HibernatePresetLookupDao<Role, HibernateRole> presetDelegate;
+    @Autowired
+    private HibernateEntireLookupDao<Role, HibernateRole> entireLookupDelegate;
     @Autowired
     private HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateRole, HibernateUser> relationDelegate;
 
@@ -131,6 +134,25 @@ public class RoleDaoImpl implements RoleDao {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         return presetDelegate.lookupCount(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<Role> lookup() throws DaoException {
+        return entireLookupDelegate.lookup();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<Role> lookup(PagingInfo pagingInfo) throws DaoException {
+        return entireLookupDelegate.lookup(pagingInfo);
+    }
+
+    @Override
+    public int lookupCount() throws DaoException {
+        return entireLookupDelegate.lookupCount();
     }
 
     @Override

@@ -251,4 +251,22 @@ public class UserMaintainServiceImpl implements UserMaintainService {
             throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
         }
     }
+
+    @Override
+    public PagedData<User> lookup() throws ServiceException {
+        try {
+            return PagingUtil.pagedData(userDao.lookup());
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    public PagedData<User> lookup(PagingInfo pagingInfo) throws ServiceException {
+        try {
+            return PagingUtil.pagedData(pagingInfo, userDao.lookupCount(), userDao.lookup(pagingInfo));
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
 }

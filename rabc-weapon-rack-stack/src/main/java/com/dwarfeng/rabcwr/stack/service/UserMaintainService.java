@@ -4,6 +4,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
 import java.util.List;
@@ -14,7 +15,10 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface UserMaintainService extends CrudService<StringIdKey, User>, PresetLookupService<User> {
+public interface UserMaintainService extends CrudService<StringIdKey, User>, PresetLookupService<User>,
+        EntireLookupService<User> {
+
+    String ID_LIKE = "id_like";
 
     /**
      * 添加用户与角色的关联。

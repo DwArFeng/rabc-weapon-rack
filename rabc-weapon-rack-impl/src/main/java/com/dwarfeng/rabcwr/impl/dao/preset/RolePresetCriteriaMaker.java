@@ -4,6 +4,7 @@ import com.dwarfeng.rabcwr.stack.service.RoleMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class RolePresetCriteriaMaker implements PresetCriteriaMaker {
             case RoleMaintainService.ENABLED_ROLE_FOR_USER:
                 enabledRoleForUser(detachedCriteria, objects);
                 break;
+            case RoleMaintainService.ID_LIKE:
+                idLike(detachedCriteria, objects);
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -57,7 +60,16 @@ public class RolePresetCriteriaMaker implements PresetCriteriaMaker {
             detachedCriteria.addOrder(Order.asc("stringId"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
 
+    private void idLike(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            StringIdKey stringIdKey = (StringIdKey) objects[0];
+            detachedCriteria.add(Restrictions.like("stringId", stringIdKey.getStringId(), MatchMode.ANYWHERE));
+            detachedCriteria.addOrder(Order.asc("stringId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }
     }
 }

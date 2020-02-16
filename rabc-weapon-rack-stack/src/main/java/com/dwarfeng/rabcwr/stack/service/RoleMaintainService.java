@@ -4,6 +4,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface RoleMaintainService extends CrudService<StringIdKey, Role>, PresetLookupService<Role> {
+public interface RoleMaintainService extends CrudService<StringIdKey, Role>, PresetLookupService<Role>,
+        EntireLookupService<Role> {
 
     String ROLE_FOR_USER = "role_for_user";
     String ENABLED_ROLE_FOR_USER = "enabled_role_for_user";
+    String ID_LIKE = "id_like";
 
     /**
      * 添加角色与用户的关联。

@@ -5,6 +5,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.rabcwr.stack.dao.PermissionDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
+import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -23,6 +24,8 @@ public class PermissionDaoImpl implements PermissionDao {
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Permission, HibernatePermission> batchDelegate;
     @Autowired
     private HibernateEntireLookupDao<Permission, HibernatePermission> entireLookupDelegate;
+    @Autowired
+    private HibernatePresetLookupDao<Permission, HibernatePermission> presetLookupDelegate;
 
     @Override
     @BehaviorAnalyse
@@ -120,5 +123,26 @@ public class PermissionDaoImpl implements PermissionDao {
     @Transactional(transactionManager = "hibernateTransactionManager")
     public int lookupCount() throws DaoException {
         return entireLookupDelegate.lookupCount();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<Permission> lookup(String preset, Object[] objs) throws DaoException {
+        return presetLookupDelegate.lookup(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public List<Permission> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+        return presetLookupDelegate.lookup(preset, objs, pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    public int lookupCount(String preset, Object[] objs) throws DaoException {
+        return presetLookupDelegate.lookupCount(preset, objs);
     }
 }

@@ -8,6 +8,7 @@ import com.dwarfeng.rabcwr.impl.dao.modifacation.RoleDeletionMod;
 import com.dwarfeng.rabcwr.impl.dao.modifacation.RoleUserRelationMod;
 import com.dwarfeng.rabcwr.impl.dao.modifacation.UserDeletionMod;
 import com.dwarfeng.rabcwr.impl.dao.modifacation.UserRoleRelationMod;
+import com.dwarfeng.rabcwr.impl.dao.preset.PermissionPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.PexpPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.RolePresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.UserPresetCriteriaMaker;
@@ -35,6 +36,22 @@ public class DaoConfiguration {
     private HibernateTemplate template;
     @Autowired
     private BeanTransformerConfiguration beanTransformerConfiguration;
+    @Autowired
+    private PexpPresetCriteriaMaker pexpPresetCriteriaMaker;
+    @Autowired
+    private RoleDeletionMod roleDeletionMod;
+    @Autowired
+    private RolePresetCriteriaMaker rolePresetCriteriaMaker;
+    @Autowired
+    private UserDeletionMod userDeletionMod;
+    @Autowired
+    private UserPresetCriteriaMaker userPresetCriteriaMaker;
+    @Autowired
+    private UserRoleRelationMod userRoleRelationMod;
+    @Autowired
+    private RoleUserRelationMod roleUserRelationMod;
+    @Autowired
+    private PermissionPresetCriteriaMaker presetCriteriaMaker;
 
     @Bean
     public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Permission, HibernatePermission> permissionDaoDelegate() {
@@ -55,28 +72,24 @@ public class DaoConfiguration {
     }
 
     @Bean
+    public HibernatePresetLookupDao<Permission, HibernatePermission> permissionHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                beanTransformerConfiguration.permissionBeanTransformer(),
+                HibernatePermission.class,
+                presetCriteriaMaker
+        );
+    }
+
+    @Bean
     public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Pexp, HibernatePexp> pexpDaoDelegate() {
         return new HibernateBatchBaseDao<>(
                 template,
                 beanTransformerConfiguration.longIdKeyBeanTransformer(),
                 beanTransformerConfiguration.pexpBeanTransformer(),
-                HibernatePexp.class);
+                HibernatePexp.class
+        );
     }
-
-    @Autowired
-    private PexpPresetCriteriaMaker pexpPresetCriteriaMaker;
-    @Autowired
-    private RoleDeletionMod roleDeletionMod;
-    @Autowired
-    private RolePresetCriteriaMaker rolePresetCriteriaMaker;
-    @Autowired
-    private UserDeletionMod userDeletionMod;
-    @Autowired
-    private UserPresetCriteriaMaker userPresetCriteriaMaker;
-    @Autowired
-    private UserRoleRelationMod userRoleRelationMod;
-    @Autowired
-    private RoleUserRelationMod roleUserRelationMod;
 
     @Bean
     public HibernatePresetLookupDao<Pexp, HibernatePexp> pexpHibernatePresetLookupDao() {
@@ -110,6 +123,15 @@ public class DaoConfiguration {
     }
 
     @Bean
+    public HibernateEntireLookupDao<Role, HibernateRole> roleHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                beanTransformerConfiguration.roleBeanTransformer(),
+                HibernateRole.class
+        );
+    }
+
+    @Bean
     public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, User, HibernateUser> userDaoDelegate() {
         return new HibernateBatchBaseDao<>(
                 template,
@@ -127,6 +149,15 @@ public class DaoConfiguration {
                 beanTransformerConfiguration.userBeanTransformer(),
                 HibernateUser.class,
                 userPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<User, HibernateUser> userHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                beanTransformerConfiguration.userBeanTransformer(),
+                HibernateUser.class
         );
     }
 
