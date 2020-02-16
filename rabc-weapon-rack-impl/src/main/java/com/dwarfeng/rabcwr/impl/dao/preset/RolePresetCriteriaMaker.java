@@ -6,10 +6,12 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Objects;
 
+@Component
 public class RolePresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override
@@ -24,32 +26,38 @@ public class RolePresetCriteriaMaker implements PresetCriteriaMaker {
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
-        detachedCriteria.addOrder(Order.asc("stringId"));
     }
 
     private void roleForUser(DetachedCriteria detachedCriteria, Object[] objects) {
-        Object object = objects[0];
-        if (Objects.isNull(object)) {
-            detachedCriteria.add(Restrictions.isEmpty("users"));
-        } else if (object instanceof StringIdKey) {
-            detachedCriteria.createAlias("users", "u");
-            detachedCriteria.add(Restrictions.eqOrIsNull("u.stringId", ((StringIdKey) object).getStringId()));
-        } else {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isEmpty("users"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.createAlias("users", "u");
+                detachedCriteria.add(Restrictions.eqOrIsNull("u.stringId", stringIdKey.getStringId()));
+            }
+            detachedCriteria.addOrder(Order.asc("stringId"));
+        } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }
     }
 
     private void enabledRoleForUser(DetachedCriteria detachedCriteria, Object[] objects) {
-        Object object = objects[0];
-        if (Objects.isNull(object)) {
-            detachedCriteria.add(Restrictions.isEmpty("users"));
-            detachedCriteria.add(Restrictions.eq("enabled", true));
-        } else if (object instanceof StringIdKey) {
-            detachedCriteria.createAlias("users", "u");
-            detachedCriteria.add(Restrictions.eqOrIsNull("u.stringId", ((StringIdKey) object).getStringId()));
-            detachedCriteria.add(Restrictions.eq("enabled", true));
-        } else {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isEmpty("users"));
+                detachedCriteria.add(Restrictions.eq("enabled", true));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.createAlias("users", "u");
+                detachedCriteria.add(Restrictions.eqOrIsNull("u.stringId", stringIdKey.getStringId()));
+                detachedCriteria.add(Restrictions.eq("enabled", true));
+            }
+            detachedCriteria.addOrder(Order.asc("stringId"));
+        } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+
         }
     }
 }

@@ -231,20 +231,6 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void lookupDelete(String preset, Object[] objs) throws ServiceException {
-        try {
-            List<StringIdKey> longIdKeys = userDao.lookupDelete(preset, objs);
-            for (StringIdKey longIdKey : longIdKeys) {
-                internalDelete(longIdKey);
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询并删除实体时发生异常", LogLevel.WARN, sem, e);
-        }
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
     public void addRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
         try {
             userPermissionCache.clear();

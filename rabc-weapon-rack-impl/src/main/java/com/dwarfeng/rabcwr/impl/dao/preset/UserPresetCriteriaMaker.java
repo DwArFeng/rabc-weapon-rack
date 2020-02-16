@@ -2,7 +2,9 @@ package com.dwarfeng.rabcwr.impl.dao.preset;
 
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserPresetCriteriaMaker implements PresetCriteriaMaker {
 
     @Override

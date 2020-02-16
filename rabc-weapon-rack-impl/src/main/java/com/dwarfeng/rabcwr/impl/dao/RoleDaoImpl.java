@@ -6,7 +6,7 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.dao.RoleDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchRelationDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetDeleteDao;
+import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -26,7 +26,7 @@ public class RoleDaoImpl implements RoleDao {
     @Autowired
     private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, Role, HibernateRole> batchDelegate;
     @Autowired
-    private HibernatePresetDeleteDao<StringIdKey, Role, HibernateRole> presetDelegate;
+    private HibernatePresetLookupDao<Role, HibernateRole> presetDelegate;
     @Autowired
     private HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateRole, HibernateUser> relationDelegate;
 
@@ -131,13 +131,6 @@ public class RoleDaoImpl implements RoleDao {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         return presetDelegate.lookupCount(preset, objs);
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
-    public List<StringIdKey> lookupDelete(String preset, Object[] objs) throws DaoException {
-        return presetDelegate.lookupDelete(preset, objs);
     }
 
     @Override

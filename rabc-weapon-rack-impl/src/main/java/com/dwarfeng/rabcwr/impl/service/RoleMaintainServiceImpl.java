@@ -238,21 +238,6 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void lookupDelete(String preset, Object[] objs) throws ServiceException {
-        try {
-            List<StringIdKey> longIdKeys = roleDao.lookupDelete(preset, objs);
-            userPermissionCache.clear();
-            for (StringIdKey longIdKey : longIdKeys) {
-                internalDelete(longIdKey);
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询并删除实体时发生异常", LogLevel.WARN, sem, e);
-        }
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
     public void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
         try {
             userPermissionCache.clear();

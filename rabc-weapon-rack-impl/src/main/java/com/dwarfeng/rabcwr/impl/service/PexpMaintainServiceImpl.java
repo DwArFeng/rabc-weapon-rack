@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -239,21 +238,6 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
             return PagingUtil.pagedData(pagingInfo, permissionDao.lookupCount(preset, objs), permissionDao.lookup(preset, objs, pagingInfo));
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询实体时发生异常", LogLevel.WARN, sem, e);
-        }
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
-    public void lookupDelete(String preset, Object[] objs) throws ServiceException {
-        try {
-            List<LongIdKey> longIdKeys = permissionDao.lookupDelete(preset, objs);
-            userPermissionCache.clear();
-            for (LongIdKey longIdKey : longIdKeys) {
-                internalDelete(longIdKey);
-            }
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("查询并删除实体时发生异常", LogLevel.WARN, sem, e);
         }
     }
 }

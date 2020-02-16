@@ -3,7 +3,7 @@ package com.dwarfeng.rabcwr.stack.dao;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
-import com.dwarfeng.subgrade.stack.dao.PresetDeleteDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
-public interface UserDao extends BatchBaseDao<StringIdKey, User>, PresetDeleteDao<StringIdKey, User> {
+public interface UserDao extends BatchBaseDao<StringIdKey, User>, PresetLookupDao<User> {
 
     /**
      * 添加用户与角色的关联。

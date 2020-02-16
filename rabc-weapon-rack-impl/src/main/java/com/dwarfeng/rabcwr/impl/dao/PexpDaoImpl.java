@@ -4,7 +4,7 @@ import com.dwarfeng.rabcwr.impl.bean.entity.HibernatePexp;
 import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.rabcwr.stack.dao.PexpDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetDeleteDao;
+import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -22,7 +22,7 @@ public class PexpDaoImpl implements PexpDao {
     @Autowired
     private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Pexp, HibernatePexp> batchDelegate;
     @Autowired
-    private HibernatePresetDeleteDao<LongIdKey, Pexp, HibernatePexp> presetDelegate;
+    private HibernatePresetLookupDao<Pexp, HibernatePexp> presetDelegate;
 
     @Override
     @BehaviorAnalyse
@@ -120,12 +120,5 @@ public class PexpDaoImpl implements PexpDao {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public int lookupCount(String preset, Object[] objs) throws DaoException {
         return presetDelegate.lookupCount(preset, objs);
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
-    public List<LongIdKey> lookupDelete(String preset, Object[] objs) throws DaoException {
-        return presetDelegate.lookupDelete(preset, objs);
     }
 }
