@@ -11,11 +11,13 @@ public class FastJsonPexp implements Bean {
 
     private static final long serialVersionUID = 6913527582734758032L;
 
-    public FastJsonPexp(FastJsonLongIdKey key, FastJsonStringIdKey roleKey, String content, String remark) {
-        this.key = key;
-        this.roleKey = roleKey;
-        this.content = content;
-        this.remark = remark;
+    public static FastJsonPexp of(@NonNull Pexp pexp) {
+        return new FastJsonPexp(
+                FastJsonLongIdKey.of(pexp.getKey()),
+                FastJsonStringIdKey.of(pexp.getRoleKey()),
+                pexp.getContent(),
+                pexp.getRemark()
+        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -33,13 +35,11 @@ public class FastJsonPexp implements Bean {
     public FastJsonPexp() {
     }
 
-    public static FastJsonPexp of(@NonNull Pexp pexp) {
-        return new FastJsonPexp(
-                FastJsonLongIdKey.of(pexp.getKey()),
-                FastJsonStringIdKey.of(pexp.getRoleKey()),
-                pexp.getContent(),
-                pexp.getRemark()
-        );
+    public FastJsonPexp(FastJsonLongIdKey key, FastJsonStringIdKey roleKey, String content, String remark) {
+        this.key = key;
+        this.roleKey = roleKey;
+        this.content = content;
+        this.remark = remark;
     }
 
     public FastJsonLongIdKey getKey() {

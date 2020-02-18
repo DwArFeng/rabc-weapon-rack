@@ -394,11 +394,6 @@
                 <artifactId>rabc-weapon-rack-impl</artifactId>
                 <version>1.2.2.a</version>
             </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>rabc-weapon-rack-node-dubbo</artifactId>
-                <version>alpha-0.0.1.a-SNAPSHOT</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -10,10 +10,13 @@ public class FastJsonUser implements Bean {
 
     private static final long serialVersionUID = 9199394085072121152L;
 
-    public FastJsonUser(FastJsonStringIdKey key, String remark) {
-        this.key = key;
-        this.remark = remark;
+    public static FastJsonUser of(@NonNull User user) {
+        return new FastJsonUser(
+                FastJsonStringIdKey.of(user.getKey()),
+                user.getRemark()
+        );
     }
+
 
     @JSONField(name = "key", ordinal = 1)
     private FastJsonStringIdKey key;
@@ -24,13 +27,11 @@ public class FastJsonUser implements Bean {
     public FastJsonUser() {
     }
 
-    public static FastJsonUser of(@NonNull User user) {
-        return new FastJsonUser(
-                FastJsonStringIdKey.of(user.getKey()),
-                user.getRemark()
-        );
+    public FastJsonUser(FastJsonStringIdKey key, String remark) {
+        this.key = key;
+        this.remark = remark;
     }
-
+    
     public FastJsonStringIdKey getKey() {
         return key;
     }

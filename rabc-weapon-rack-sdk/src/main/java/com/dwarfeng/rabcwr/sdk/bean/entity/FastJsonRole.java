@@ -10,10 +10,12 @@ public class FastJsonRole implements Bean {
 
     private static final long serialVersionUID = -4501705687291160541L;
 
-    public FastJsonRole(FastJsonStringIdKey key, boolean enabled, String remark) {
-        this.key = key;
-        this.enabled = enabled;
-        this.remark = remark;
+    public static FastJsonRole of(@NonNull Role role) {
+        return new FastJsonRole(
+                FastJsonStringIdKey.of(role.getKey()),
+                role.isEnabled(),
+                role.getRemark()
+        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -28,12 +30,10 @@ public class FastJsonRole implements Bean {
     public FastJsonRole() {
     }
 
-    public static FastJsonRole of(@NonNull Role role) {
-        return new FastJsonRole(
-                FastJsonStringIdKey.of(role.getKey()),
-                role.isEnabled(),
-                role.getRemark()
-        );
+    public FastJsonRole(FastJsonStringIdKey key, boolean enabled, String remark) {
+        this.key = key;
+        this.enabled = enabled;
+        this.remark = remark;
     }
 
     public FastJsonStringIdKey getKey() {

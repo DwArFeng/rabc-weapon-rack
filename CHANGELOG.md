@@ -9,6 +9,7 @@
 #### Bug修复
 
 - 升级subgrade项目版本为beta-0.2.3.a以修复PagedData对象中字段拼写错误bug。
+- 删除pom.xml关于项目本身过时的引用。
 
 #### 功能移除
 

@@ -10,9 +10,11 @@ public class FastJsonPermission implements Bean {
 
     private static final long serialVersionUID = -1611452886001308613L;
 
-    public FastJsonPermission(FastJsonStringIdKey key, String remark) {
-        this.key = key;
-        this.remark = remark;
+    public static FastJsonPermission of(@NonNull Permission permission) {
+        return new FastJsonPermission(
+                FastJsonStringIdKey.of(permission.getKey()),
+                permission.getRemark()
+        );
     }
 
     @JSONField(name = "key", ordinal = 1)
@@ -24,11 +26,9 @@ public class FastJsonPermission implements Bean {
     public FastJsonPermission() {
     }
 
-    public static FastJsonPermission of(@NonNull Permission permission) {
-        return new FastJsonPermission(
-                FastJsonStringIdKey.of(permission.getKey()),
-                permission.getRemark()
-        );
+    public FastJsonPermission(FastJsonStringIdKey key, String remark) {
+        this.key = key;
+        this.remark = remark;
     }
 
     public FastJsonStringIdKey getKey() {

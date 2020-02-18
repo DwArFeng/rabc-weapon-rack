@@ -10,6 +10,16 @@ import org.springframework.lang.NonNull;
 public class JSFixedFastJsonPexp implements Bean {
 
     private static final long serialVersionUID = 6913527582734758032L;
+
+    public static JSFixedFastJsonPexp of(@NonNull Pexp pexp) {
+        return new JSFixedFastJsonPexp(
+                JSFixedFastJsonLongIdKey.of(pexp.getKey()),
+                FastJsonStringIdKey.of(pexp.getRoleKey()),
+                pexp.getContent(),
+                pexp.getRemark()
+        );
+    }
+
     @JSONField(name = "key", ordinal = 1)
     private JSFixedFastJsonLongIdKey key;
     @JSONField(name = "role_key", ordinal = 2)
@@ -27,15 +37,6 @@ public class JSFixedFastJsonPexp implements Bean {
         this.roleKey = roleKey;
         this.content = content;
         this.remark = remark;
-    }
-
-    public static JSFixedFastJsonPexp of(@NonNull Pexp pexp) {
-        return new JSFixedFastJsonPexp(
-                JSFixedFastJsonLongIdKey.of(pexp.getKey()),
-                FastJsonStringIdKey.of(pexp.getRoleKey()),
-                pexp.getContent(),
-                pexp.getRemark()
-        );
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
