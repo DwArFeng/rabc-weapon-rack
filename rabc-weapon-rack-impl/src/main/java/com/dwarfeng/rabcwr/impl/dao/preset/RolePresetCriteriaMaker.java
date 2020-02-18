@@ -65,8 +65,8 @@ public class RolePresetCriteriaMaker implements PresetCriteriaMaker {
 
     private void idLike(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
-            StringIdKey stringIdKey = (StringIdKey) objects[0];
-            detachedCriteria.add(Restrictions.like("stringId", stringIdKey.getStringId(), MatchMode.ANYWHERE));
+            String id = (String) objects[0];
+            detachedCriteria.add(Restrictions.like("stringId", id, MatchMode.ANYWHERE));
             detachedCriteria.addOrder(Order.asc("stringId"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));

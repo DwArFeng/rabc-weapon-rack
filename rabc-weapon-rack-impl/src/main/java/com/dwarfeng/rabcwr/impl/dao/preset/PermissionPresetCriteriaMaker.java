@@ -2,7 +2,6 @@ package com.dwarfeng.rabcwr.impl.dao.preset;
 
 import com.dwarfeng.rabcwr.stack.service.PermissionMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
-import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -25,8 +24,8 @@ public class PermissionPresetCriteriaMaker implements PresetCriteriaMaker {
 
     private void idLike(DetachedCriteria criteria, Object[] objs) {
         try {
-            StringIdKey stringIdKey = (StringIdKey) objs[0];
-            criteria.add(Restrictions.like("stringId", stringIdKey.getStringId(), MatchMode.ANYWHERE));
+            String id = (String) objs[0];
+            criteria.add(Restrictions.like("stringId", id, MatchMode.ANYWHERE));
             criteria.addOrder(Order.asc("stringId"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
