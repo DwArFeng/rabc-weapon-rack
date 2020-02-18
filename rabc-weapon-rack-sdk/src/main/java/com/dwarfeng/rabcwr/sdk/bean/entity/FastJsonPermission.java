@@ -1,12 +1,19 @@
 package com.dwarfeng.rabcwr.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import org.springframework.lang.NonNull;
 
 public class FastJsonPermission implements Bean {
 
     private static final long serialVersionUID = -1611452886001308613L;
+
+    public FastJsonPermission(FastJsonStringIdKey key, String remark) {
+        this.key = key;
+        this.remark = remark;
+    }
 
     @JSONField(name = "key", ordinal = 1)
     private FastJsonStringIdKey key;
@@ -15,6 +22,13 @@ public class FastJsonPermission implements Bean {
     private String remark;
 
     public FastJsonPermission() {
+    }
+
+    public static FastJsonPermission of(@NonNull Permission permission) {
+        return new FastJsonPermission(
+                FastJsonStringIdKey.of(permission.getKey()),
+                permission.getRemark()
+        );
     }
 
     public FastJsonStringIdKey getKey() {
