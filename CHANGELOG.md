@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Release_1.2.3_20200221_build_A
+
+#### 功能构建
+
+- 升级subgrade版本为beta-0.2.4.a，以便依赖更好的RelationDao。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.2.2_20200218_build_B
 
 #### 功能构建

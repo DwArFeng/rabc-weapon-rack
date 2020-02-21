@@ -23,11 +23,20 @@ public interface RoleMaintainService extends CrudService<StringIdKey, Role>, Pre
     /**
      * 添加角色与用户的关联。
      *
-     * @param roleIdKey  指定的角色主键。
-     * @param userIdKeys 指定的用户主键组成的列表。
+     * @param roleIdKey 指定的角色主键。
+     * @param userIdKey 指定的用户主键。
      * @throws ServiceException 服务异常。
      */
-    void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException;
+    void addUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException;
+
+    /**
+     * 添加角色与用户的关联。
+     *
+     * @param roleIdKey 指定的角色主键。
+     * @param userIdKey 指定的用户主键。
+     * @throws ServiceException 服务异常。
+     */
+    void deleteUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException;
 
     /**
      * 添加角色与用户的关联。
@@ -36,5 +45,14 @@ public interface RoleMaintainService extends CrudService<StringIdKey, Role>, Pre
      * @param userIdKeys 指定的用户主键组成的列表。
      * @throws ServiceException 服务异常。
      */
-    void removeUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException;
+    void batchAddUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException;
+
+    /**
+     * 添加角色与用户的关联。
+     *
+     * @param roleIdKey  指定的角色主键。
+     * @param userIdKeys 指定的用户主键组成的列表。
+     * @throws ServiceException 服务异常。
+     */
+    void batchDeleteUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException;
 }

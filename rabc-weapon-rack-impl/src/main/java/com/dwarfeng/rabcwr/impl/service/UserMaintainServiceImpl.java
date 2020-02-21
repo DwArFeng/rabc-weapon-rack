@@ -229,30 +229,6 @@ public class UserMaintainServiceImpl implements UserMaintainService {
     }
 
     @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
-    public void addRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
-        try {
-            userPermissionCache.clear();
-            userDao.addRoles(userIdKey, roleIdKeys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
-        }
-    }
-
-    @Override
-    @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
-    public void deleteRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
-        try {
-            userPermissionCache.clear();
-            userDao.deleteRoles(userIdKey, roleIdKeys);
-        } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
-        }
-    }
-
-    @Override
     public PagedData<User> lookup() throws ServiceException {
         try {
             return PagingUtil.pagedData(userDao.lookup());
@@ -267,6 +243,54 @@ public class UserMaintainServiceImpl implements UserMaintainService {
             return PagingUtil.pagedData(pagingInfo, userDao.lookupCount(), userDao.lookup(pagingInfo));
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void addRoleRelation(StringIdKey userIdKey, StringIdKey roleIdKey) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            userDao.addRoleRelation(userIdKey, roleIdKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void deleteRoleRelation(StringIdKey userIdKey, StringIdKey roleIdKey) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            userDao.deleteRoleRelation(userIdKey, roleIdKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchAddRoleRelations(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            userDao.batchAddRoleRelations(userIdKey, roleIdKeys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("添加用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchDeleteRoleRelations(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            userDao.batchDeleteRoleRelations(userIdKey, roleIdKeys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除用户与角色的关联时发生异常", LogLevel.WARN, sem, e);
         }
     }
 }

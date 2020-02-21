@@ -126,9 +126,9 @@ public class PermissionHandlerImplTest {
             roleMaintainService.insert(roleB);
             roleMaintainService.insert(roleC);
 
-            userMaintainService.addRoles(zhangSan.getKey(), Arrays.asList(roleA.getKey(), roleB.getKey(), roleC.getKey()));
-            userMaintainService.addRoles(liSi.getKey(), Arrays.asList(roleB.getKey(), roleC.getKey()));
-            userMaintainService.addRoles(wangWu.getKey(), Collections.singletonList(roleC.getKey()));
+            userMaintainService.batchAddRoleRelations(zhangSan.getKey(), Arrays.asList(roleA.getKey(), roleB.getKey(), roleC.getKey()));
+            userMaintainService.batchAddRoleRelations(liSi.getKey(), Arrays.asList(roleB.getKey(), roleC.getKey()));
+            userMaintainService.batchAddRoleRelations(wangWu.getKey(), Collections.singletonList(roleC.getKey()));
 
             pexpMaintainService.insert(pexp1);
             pexpMaintainService.insert(pexp2);

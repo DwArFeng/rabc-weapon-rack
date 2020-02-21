@@ -238,10 +238,10 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
+    public void addUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException {
         try {
             userPermissionCache.clear();
-            roleDao.addUsers(roleIdKey, userIdKeys);
+            roleDao.addUserRelation(roleIdKey, userIdKey);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
         }
@@ -250,12 +250,36 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void removeUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
+    public void deleteUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException {
         try {
             userPermissionCache.clear();
-            roleDao.removeUsers(roleIdKey, userIdKeys);
+            roleDao.deleteUserRelation(roleIdKey, userIdKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchAddUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            roleDao.batchAddUserRelations(roleIdKey, userIdKeys);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("添加角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchDeleteUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
+        try {
+            userPermissionCache.clear();
+            roleDao.batchDeleteUserRelations(roleIdKey, userIdKeys);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("删除角色与用户的关联时发生异常", LogLevel.WARN, sem, e);
         }
     }
 

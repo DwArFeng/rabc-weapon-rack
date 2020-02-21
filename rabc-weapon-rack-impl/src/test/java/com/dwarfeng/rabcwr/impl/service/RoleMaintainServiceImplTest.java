@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,9 +65,9 @@ public class RoleMaintainServiceImplTest {
             roleMaintainService.insert(admin);
             roleMaintainService.insert(guest);
             roleMaintainService.insert(moderator);
-            roleMaintainService.addUsers(admin.getKey(), Collections.singletonList(zhangSan.getKey()));
-            roleMaintainService.addUsers(moderator.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey()));
-            roleMaintainService.addUsers(guest.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey(), wangWu.getKey()));
+            roleMaintainService.addUserRelation(admin.getKey(), zhangSan.getKey());
+            roleMaintainService.batchAddUserRelations(moderator.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey()));
+            roleMaintainService.batchAddUserRelations(guest.getKey(), Arrays.asList(zhangSan.getKey(), liSi.getKey(), wangWu.getKey()));
 
             //此处用断点观测roles的值，判断是否正确。
             //noinspection unused

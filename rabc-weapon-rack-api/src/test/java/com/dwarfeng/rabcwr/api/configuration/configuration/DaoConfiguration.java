@@ -5,9 +5,7 @@ import com.dwarfeng.rabcwr.impl.bean.entity.HibernatePexp;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateRole;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateUser;
 import com.dwarfeng.rabcwr.impl.dao.modifacation.RoleDeletionMod;
-import com.dwarfeng.rabcwr.impl.dao.modifacation.RoleUserRelationMod;
 import com.dwarfeng.rabcwr.impl.dao.modifacation.UserDeletionMod;
-import com.dwarfeng.rabcwr.impl.dao.modifacation.UserRoleRelationMod;
 import com.dwarfeng.rabcwr.impl.dao.preset.PermissionPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.PexpPresetCriteriaMaker;
 import com.dwarfeng.rabcwr.impl.dao.preset.RolePresetCriteriaMaker;
@@ -46,10 +44,6 @@ public class DaoConfiguration {
     private UserDeletionMod userDeletionMod;
     @Autowired
     private UserPresetCriteriaMaker userPresetCriteriaMaker;
-    @Autowired
-    private UserRoleRelationMod userRoleRelationMod;
-    @Autowired
-    private RoleUserRelationMod roleUserRelationMod;
     @Autowired
     private PermissionPresetCriteriaMaker presetCriteriaMaker;
 
@@ -162,26 +156,36 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateUser, HibernateRole> userRoleBatchRelationDao() {
+    public HibernateBatchRelationDao<StringIdKey, User, StringIdKey, Role, HibernateStringIdKey, HibernateUser,
+            HibernateStringIdKey, HibernateRole> userRoleBatchRelationDao() {
         return new HibernateBatchRelationDao<>(
                 template,
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
+                beanTransformerConfiguration.userBeanTransformer(),
+                beanTransformerConfiguration.roleBeanTransformer(),
                 HibernateUser.class,
                 HibernateRole.class,
-                userRoleRelationMod
+                "roles",
+                "users",
+                HibernateBatchRelationDao.JoinType.JOIN_BY_CHILD
         );
     }
 
     @Bean
-    public HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateRole, HibernateUser> roleUserBatchRelationDao() {
+    public HibernateBatchRelationDao<StringIdKey, Role, StringIdKey, User, HibernateStringIdKey, HibernateRole,
+            HibernateStringIdKey, HibernateUser> roleUserBatchRelationDao() {
         return new HibernateBatchRelationDao<>(
                 template,
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
                 beanTransformerConfiguration.stringIdKeyBeanTransformer(),
+                beanTransformerConfiguration.roleBeanTransformer(),
+                beanTransformerConfiguration.userBeanTransformer(),
                 HibernateRole.class,
                 HibernateUser.class,
-                roleUserRelationMod
+                "users",
+                "roles",
+                HibernateBatchRelationDao.JoinType.JOIN_BY_PARENT
         );
     }
 }

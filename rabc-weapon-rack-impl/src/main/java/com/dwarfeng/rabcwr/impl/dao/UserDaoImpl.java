@@ -2,6 +2,7 @@ package com.dwarfeng.rabcwr.impl.dao;
 
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateRole;
 import com.dwarfeng.rabcwr.impl.bean.entity.HibernateUser;
+import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.rabcwr.stack.dao.UserDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
@@ -31,7 +32,8 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private HibernateEntireLookupDao<User, HibernateUser> entireLookupDelegate;
     @Autowired
-    private HibernateBatchRelationDao<StringIdKey, StringIdKey, HibernateStringIdKey, HibernateStringIdKey, HibernateUser, HibernateRole> relationDelegate;
+    private HibernateBatchRelationDao<StringIdKey, User, StringIdKey, Role, HibernateStringIdKey, HibernateUser,
+            HibernateStringIdKey, HibernateRole> relationDelegate;
 
     @Autowired
     private HibernateTemplate template;
@@ -160,14 +162,28 @@ public class UserDaoImpl implements UserDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void addRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws DaoException {
-        relationDelegate.batchAddRelation(userIdKey, roleIdKeys);
+    public void addRoleRelation(StringIdKey userIdKey, StringIdKey roleIdKey) throws DaoException {
+        relationDelegate.addRelation(userIdKey, roleIdKey);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager")
-    public void deleteRoles(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws DaoException {
-        relationDelegate.batchDeleteRelation(userIdKey, roleIdKeys);
+    public void deleteRoleRelation(StringIdKey userIdKey, StringIdKey roleIdKey) throws DaoException {
+        relationDelegate.deleteRelation(userIdKey, roleIdKey);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchAddRoleRelations(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws DaoException {
+        relationDelegate.batchAddRelations(userIdKey, roleIdKeys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager")
+    public void batchDeleteRoleRelations(StringIdKey userIdKey, List<StringIdKey> roleIdKeys) throws DaoException {
+        relationDelegate.batchDeleteRelations(userIdKey, roleIdKeys);
     }
 }

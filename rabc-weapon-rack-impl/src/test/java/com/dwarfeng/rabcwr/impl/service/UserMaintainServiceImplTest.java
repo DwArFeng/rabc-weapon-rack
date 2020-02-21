@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -64,9 +63,9 @@ public class UserMaintainServiceImplTest {
             roleMaintainService.insert(admin);
             roleMaintainService.insert(guest);
             roleMaintainService.insert(moderator);
-            userMaintainService.addRoles(zhangSan.getKey(), Arrays.asList(admin.getKey(), moderator.getKey(), guest.getKey()));
-            userMaintainService.addRoles(liSi.getKey(), Arrays.asList(moderator.getKey(), guest.getKey()));
-            userMaintainService.addRoles(wangWu.getKey(), Collections.singletonList(guest.getKey()));
+            userMaintainService.batchAddRoleRelations(zhangSan.getKey(), Arrays.asList(admin.getKey(), moderator.getKey(), guest.getKey()));
+            userMaintainService.batchAddRoleRelations(liSi.getKey(), Arrays.asList(moderator.getKey(), guest.getKey()));
+            userMaintainService.addRoleRelation(wangWu.getKey(), guest.getKey());
         } finally {
             if (Objects.nonNull(zhangSan)) userMaintainService.delete(zhangSan.getKey());
             roleMaintainService.delete(admin.getKey());

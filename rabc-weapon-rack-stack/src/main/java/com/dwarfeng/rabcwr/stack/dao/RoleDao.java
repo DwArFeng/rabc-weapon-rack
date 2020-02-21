@@ -10,6 +10,8 @@ import com.dwarfeng.subgrade.stack.exception.DaoException;
 import java.util.List;
 
 /**
+ * 角色数据访问层。
+ *
  * @author DwArFeng
  * @since 0.0.1-alpha
  */
@@ -18,11 +20,20 @@ public interface RoleDao extends BatchBaseDao<StringIdKey, Role>, PresetLookupDa
     /**
      * 添加角色与用户的关联。
      *
-     * @param roleIdKey  指定的角色主键。
-     * @param userIdKeys 指定的用户主键组成的列表。
+     * @param roleIdKey 指定的角色主键。
+     * @param userIdKey 指定的用户主键。
      * @throws DaoException 数据访问层异常。
      */
-    void addUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException;
+    void addUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws DaoException;
+
+    /**
+     * 添加角色与用户的关联。
+     *
+     * @param roleIdKey 指定的角色主键。
+     * @param userIdKey 指定的用户主键。
+     * @throws DaoException 数据访问层异常。
+     */
+    void deleteUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws DaoException;
 
     /**
      * 添加角色与用户的关联。
@@ -31,5 +42,14 @@ public interface RoleDao extends BatchBaseDao<StringIdKey, Role>, PresetLookupDa
      * @param userIdKeys 指定的用户主键组成的列表。
      * @throws DaoException 数据访问层异常。
      */
-    void removeUsers(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException;
+    void batchAddUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException;
+
+    /**
+     * 添加角色与用户的关联。
+     *
+     * @param roleIdKey  指定的角色主键。
+     * @param userIdKeys 指定的用户主键组成的列表。
+     * @throws DaoException 数据访问层异常。
+     */
+    void batchDeleteUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws DaoException;
 }
