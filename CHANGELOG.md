@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Release_1.2.3_20200221_build_A
+### Release_1.2.3_20200222_build_A
 
 #### 功能构建
 
@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复PermissionMaintainServiceImpl.lookup方法返回结果不正常的bug。
 
 #### 功能移除
 

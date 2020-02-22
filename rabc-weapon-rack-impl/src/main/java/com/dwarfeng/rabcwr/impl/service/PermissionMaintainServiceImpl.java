@@ -239,12 +239,11 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
         try {
             if (permissionListCache.exists()) {
                 List<Permission> permissions = permissionListCache.get(pagingInfo);
-                return PagingUtil.pagedData(pagingInfo, permissions.size(), permissions);
+                return PagingUtil.pagedData(pagingInfo, permissionListCache.size(), permissions);
             }
             List<Permission> lookup = permissionDao.lookup();
             permissionListCache.set(lookup, permissionTimeout);
-            PagingUtil.IntIndexBounds bounds = PagingUtil.intIndexBound(pagingInfo, lookup.size());
-            return PagingUtil.pagedData(pagingInfo, lookup.size(), lookup.subList(bounds.getBeginIndex(), bounds.getEndIndex()));
+            return PagingUtil.pagedData(pagingInfo, lookup.size(), PagingUtil.subList(lookup, pagingInfo));
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("查询全部时发生异常", LogLevel.WARN, sem, e);
         }
