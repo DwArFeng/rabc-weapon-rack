@@ -4,11 +4,13 @@
 
 #### 功能构建
 
-- 升级subgrade版本为beta-0.2.4.a，以便依赖更好的RelationDao。
+- 升级subgrade版本为beta-0.3.0.a。
+- 升级snowflake版本为1.2.2.a。
+- FastJson实体of方法增加空值判断。
 
 #### Bug修复
 
-- 修复PermissionMaintainServiceImpl.lookup方法返回结果不正常的bug。
+- 修正冲突的依赖并去掉无用的依赖。
 
 #### 功能移除
 
@@ -69,11 +71,11 @@
 
 #### 功能构建
 
-- FastJson实体of方法增加空值判断。
+- (无)
 
 #### Bug修复
 
-- 修正冲突的依赖并去掉无用的依赖。
+- 升级subgrade项目版本为beta-0.2.2.b以修复查询对象的总页数错误bug。
 
 #### 功能移除
 

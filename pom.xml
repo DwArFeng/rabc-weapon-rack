@@ -59,8 +59,8 @@
         <dozer.version>5.5.1</dozer.version>
         <dutil.version>beta-0.2.1.a-SNAPSHOT</dutil.version>
         <cxf.version>3.1.6</cxf.version>
-        <snowflake.version>1.2.0.a</snowflake.version>
-        <subgrade.version>beta-0.2.4.a</subgrade.version>
+        <snowflake.version>1.2.2.a</snowflake.version>
+        <subgrade.version>beta-0.3.0.a</subgrade.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
