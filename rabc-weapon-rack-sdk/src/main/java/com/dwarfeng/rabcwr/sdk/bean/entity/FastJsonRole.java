@@ -4,13 +4,17 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.rabcwr.stack.bean.entity.Role;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.springframework.lang.NonNull;
+
+import java.util.Objects;
 
 public class FastJsonRole implements Bean {
 
     private static final long serialVersionUID = -4501705687291160541L;
 
-    public static FastJsonRole of(@NonNull Role role) {
+    public static FastJsonRole of(Role role) {
+        if (Objects.isNull(role)) {
+            return null;
+        }
         return new FastJsonRole(
                 FastJsonStringIdKey.of(role.getKey()),
                 role.isEnabled(),

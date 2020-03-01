@@ -4,13 +4,17 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.rabcwr.stack.bean.entity.Permission;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.springframework.lang.NonNull;
+
+import java.util.Objects;
 
 public class FastJsonPermission implements Bean {
 
     private static final long serialVersionUID = -1611452886001308613L;
 
-    public static FastJsonPermission of(@NonNull Permission permission) {
+    public static FastJsonPermission of(Permission permission) {
+        if (Objects.isNull(permission)) {
+            return null;
+        }
         return new FastJsonPermission(
                 FastJsonStringIdKey.of(permission.getKey()),
                 permission.getRemark()

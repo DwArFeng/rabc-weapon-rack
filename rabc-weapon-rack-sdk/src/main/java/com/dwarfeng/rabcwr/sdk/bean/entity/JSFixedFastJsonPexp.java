@@ -5,13 +5,17 @@ import com.dwarfeng.rabcwr.stack.bean.entity.Pexp;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.springframework.lang.NonNull;
+
+import java.util.Objects;
 
 public class JSFixedFastJsonPexp implements Bean {
 
     private static final long serialVersionUID = 6913527582734758032L;
 
-    public static JSFixedFastJsonPexp of(@NonNull Pexp pexp) {
+    public static JSFixedFastJsonPexp of(Pexp pexp) {
+        if (Objects.isNull(pexp)) {
+            return null;
+        }
         return new JSFixedFastJsonPexp(
                 JSFixedFastJsonLongIdKey.of(pexp.getKey()),
                 FastJsonStringIdKey.of(pexp.getRoleKey()),

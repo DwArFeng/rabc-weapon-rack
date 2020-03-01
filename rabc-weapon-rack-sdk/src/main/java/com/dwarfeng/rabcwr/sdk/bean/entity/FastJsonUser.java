@@ -4,13 +4,17 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.rabcwr.stack.bean.entity.User;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.springframework.lang.NonNull;
+
+import java.util.Objects;
 
 public class FastJsonUser implements Bean {
 
     private static final long serialVersionUID = 9199394085072121152L;
 
-    public static FastJsonUser of(@NonNull User user) {
+    public static FastJsonUser of(User user) {
+        if (Objects.isNull(user)) {
+            return null;
+        }
         return new FastJsonUser(
                 FastJsonStringIdKey.of(user.getKey()),
                 user.getRemark()
@@ -31,7 +35,7 @@ public class FastJsonUser implements Bean {
         this.key = key;
         this.remark = remark;
     }
-    
+
     public FastJsonStringIdKey getKey() {
         return key;
     }
