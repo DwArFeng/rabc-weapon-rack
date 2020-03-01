@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Release_1.2.4_20200301_build_A
+
+#### 功能构建
+
+- 升级subgrade版本为beta-0.2.4.a，以便依赖更好的RelationDao。
+
+#### Bug修复
+
+- 修复PermissionMaintainServiceImpl.lookup方法返回结果不正常的bug。
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.2.3_20200222_build_A
 
 #### 功能构建
@@ -57,7 +73,7 @@
 
 #### Bug修复
 
-- 升级subgrade项目版本为beta-0.2.2.b以修复查询对象的总页数错误bug。
+- 修正冲突的依赖并去掉无用的依赖。
 
 #### 功能移除
 
