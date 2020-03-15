@@ -45,8 +45,8 @@ public class CacheConfiguration {
     private String userPermissionListKey;
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<StringIdKey, Permission, FastJsonPermission> permissionCacheDelegate() {
-        //noinspection unchecked
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPermission>) template,
                 new StringIdStringKeyFormatter(permissionPrefix),
@@ -55,8 +55,8 @@ public class CacheConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisListCache<Permission, FastJsonPermission> permissionRedisListCache() {
-        //noinspection unchecked
         return new RedisListCache<>(
                 permissionListKey,
                 (RedisTemplate<String, FastJsonPermission>) template,
@@ -65,8 +65,8 @@ public class CacheConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<LongIdKey, Pexp, FastJsonPexp> pexpCacheDelegate() {
-        //noinspection unchecked
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPexp>) template,
                 new LongIdStringKeyFormatter(pexpPrefix),
@@ -75,8 +75,8 @@ public class CacheConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<StringIdKey, Role, FastJsonRole> roleCacheDelegate() {
-        //noinspection unchecked
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonRole>) template,
                 new StringIdStringKeyFormatter(rolePrefix),
@@ -85,8 +85,8 @@ public class CacheConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseCache<StringIdKey, User, FastJsonUser> userCacheDelegate() {
-        //noinspection unchecked
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
@@ -95,8 +95,8 @@ public class CacheConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public RedisKeyListCache<StringIdKey, Permission, FastJsonPermission> userPermissionRedisKeyListCache() {
-        //noinspection unchecked
         return new RedisKeyListCache<>(
                 (RedisTemplate<String, FastJsonPermission>) template,
                 new StringIdStringKeyFormatter(userPermissionListKey),

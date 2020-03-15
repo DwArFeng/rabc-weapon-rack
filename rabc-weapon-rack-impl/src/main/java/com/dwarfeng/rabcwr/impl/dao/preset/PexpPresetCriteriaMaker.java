@@ -49,7 +49,7 @@ public class PexpPresetCriteriaMaker implements PresetCriteriaMaker {
             if (Objects.isNull(objects[0])) {
                 detachedCriteria.add(Restrictions.isNull("roleId"));
             } else {
-                //noinspection unchecked
+                @SuppressWarnings("unchecked")
                 List<StringIdKey> stringIdKeys = (List<StringIdKey>) objects[0];
                 if (stringIdKeys.isEmpty()) {
                     detachedCriteria.add(Restrictions.isNull("longId"));
