@@ -19,8 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class PermissionLookupServiceImpl implements PermissionLookupService {
@@ -66,15 +67,19 @@ public class PermissionLookupServiceImpl implements PermissionLookupService {
             throw new ServiceException(ServiceExceptionCodes.USER_NOT_EXISTS);
         }
         // 获取用户有效的权限表达式。
-        List<StringIdKey> roleKeys = roleMaintainService.lookup(RoleMaintainService.ENABLED_ROLE_FOR_USER, new Object[]{userKey}).getData()
-                .stream().map(Role::getKey).collect(Collectors.toList());
-        List<Pexp> pexps = pexpMaintainService.lookup(PexpMaintainService.PEXP_FOR_ROLE_SET, new Object[]{roleKeys}).getData();
-        // debug输出用户获得的所有权限表达式。
-        LOGGER.debug("查询获得用户 " + userKey.toString() + " 的权限:");
-        pexps.forEach(pexp -> LOGGER.debug("\t" + pexp.toString()));
+        List<Role> roles = roleMaintainService.lookup(RoleMaintainService.ENABLED_ROLE_FOR_USER, new Object[]{userKey}).getData();
+        Map<Role, List<Pexp>> pexpsMap = new HashMap<>();
+        for (Role role : roles) {
+            List<Pexp> pexps = pexpMaintainService.lookup(PexpMaintainService.PEXP_FOR_ROLE, new Object[]{role.getKey()}).getData();
+            pexpsMap.put(role, pexps);
+        }
         // 查询所有的权限。
         List<Permission> permissions = permissionMaintainService.lookup().getData();
         // 通过所有的权限表达式和所有的权限解析用户拥有的所有权限。
-        return pexpHandler.analysePermissions(pexps, permissions);
+        permissions = pexpHandler.analysePermissions(pexpsMap, permissions);
+        // Debug输出用户获得的所有权限表达式。
+        LOGGER.debug("查询获得用户 " + userKey.toString() + " 的权限:");
+        permissions.forEach(permission -> LOGGER.debug("\t" + permission));
+        return permissions;
     }
 }
