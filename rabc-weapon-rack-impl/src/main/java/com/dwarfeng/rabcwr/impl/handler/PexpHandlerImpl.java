@@ -21,8 +21,8 @@ public class PexpHandlerImpl implements PexpHandler {
     public static final String REJECT_MODIFIER = "-";
     public static final String GLOBAL_REJECT_MODIFIER = "!";
 
-    @Autowired
-    private Set<PermissionFilter> permissionFilters;
+    @Autowired(required = false)
+    private Set<PermissionFilter> permissionFilters = new HashSet<>();
 
     @Override
     @BehaviorAnalyse

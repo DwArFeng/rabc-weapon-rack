@@ -62,3 +62,18 @@ buildNumber.properties
 /rabc-weapon-rack-node/conf/
 /rabc-weapon-rack-impl/conf/
 /rabc-weapon-rack-api/conf/
+
+#################
+## Libext Files
+#################
+/rabc-weapon-rack-node/libext/
+
+#################
+## Opt Files
+#################
+/rabc-weapon-rack-node/opt/
+
+#################
+## Optext Files
+#################
+/rabc-weapon-rack-node/optext/
