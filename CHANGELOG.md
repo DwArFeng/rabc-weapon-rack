@@ -6,6 +6,7 @@
 
 - 完善@Transactional注解的回滚机制。
 - 更改项目的打包名称。
+- 更新README.md。
 
 #### Bug修复
 

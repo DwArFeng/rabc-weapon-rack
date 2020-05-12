@@ -21,6 +21,7 @@ public class PexpHandlerImpl implements PexpHandler {
     public static final String REJECT_MODIFIER = "-";
     public static final String GLOBAL_REJECT_MODIFIER = "!";
 
+    @SuppressWarnings("FieldMayBeFinal")
     @Autowired(required = false)
     private Set<PermissionFilter> permissionFilters = new HashSet<>();
 
