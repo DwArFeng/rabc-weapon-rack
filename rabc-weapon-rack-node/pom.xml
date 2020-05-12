@@ -141,6 +141,7 @@
                             </descriptors>
                             <tarLongFileMode>gnu</tarLongFileMode>
                             <attach>false</attach>
+                            <finalName>rabcwr-${project.version}</finalName>
                         </configuration>
                     </execution>
                 </executions>
