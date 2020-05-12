@@ -46,7 +46,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws ServiceException {
         try {
             return internalExists(key);
@@ -61,7 +61,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Permission get(StringIdKey key) throws ServiceException {
         try {
             return internalGet(key);
@@ -85,7 +85,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(Permission permission) throws ServiceException {
         try {
             return internalInsert(permission);
@@ -109,7 +109,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(Permission permission) throws ServiceException {
         try {
             internalUpdate(permission);
@@ -132,7 +132,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws ServiceException {
         try {
             internalDelete(key);
@@ -155,7 +155,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Permission getIfExists(StringIdKey key) throws ServiceException {
         try {
             return internalExists(key) ? internalGet(key) : null;
@@ -166,7 +166,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertIfNotExists(Permission permission) throws ServiceException {
         try {
             if (Objects.isNull(permission.getKey()) || !internalExists(permission.getKey())) {
@@ -180,7 +180,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(Permission permission) throws ServiceException {
         try {
             if (internalExists(permission.getKey())) {
@@ -193,7 +193,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(StringIdKey key) throws ServiceException {
         try {
             if (internalExists(key)) {
@@ -206,7 +206,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertOrUpdate(Permission permission) throws ServiceException {
         try {
             if (internalExists(permission.getKey())) {
@@ -251,7 +251,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Permission> lookup(String preset, Object[] objs) throws ServiceException {
         try {
             return PagingUtil.pagedData(permissionDao.lookup(preset, objs));
@@ -262,7 +262,7 @@ public class PermissionMaintainServiceImpl implements PermissionMaintainService 
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Permission> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         try {
             return PagingUtil.pagedData(pagingInfo, permissionDao.lookupCount(preset, objs), permissionDao.lookup(preset, objs, pagingInfo));

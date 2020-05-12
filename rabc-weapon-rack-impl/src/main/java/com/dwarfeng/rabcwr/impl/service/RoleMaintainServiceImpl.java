@@ -42,7 +42,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(StringIdKey key) throws ServiceException {
         try {
             return internalExists(key);
@@ -57,7 +57,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Role get(StringIdKey key) throws ServiceException {
         try {
             return internalGet(key);
@@ -81,7 +81,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insert(Role role) throws ServiceException {
         try {
             return internalInsert(role);
@@ -104,7 +104,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(Role role) throws ServiceException {
         try {
             internalUpdate(role);
@@ -126,7 +126,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(StringIdKey key) throws ServiceException {
         try {
             internalDelete(key);
@@ -148,7 +148,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Role getIfExists(StringIdKey key) throws ServiceException {
         try {
             return internalExists(key) ? internalGet(key) : null;
@@ -159,7 +159,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertIfNotExists(Role role) throws ServiceException {
         try {
             if (Objects.isNull(role.getKey()) || !internalExists(role.getKey())) {
@@ -173,7 +173,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(Role role) throws ServiceException {
         try {
             if (internalExists(role.getKey())) {
@@ -186,7 +186,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(StringIdKey key) throws ServiceException {
         try {
             if (internalExists(key)) {
@@ -199,7 +199,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public StringIdKey insertOrUpdate(Role role) throws ServiceException {
         try {
             if (internalExists(role.getKey())) {
@@ -215,7 +215,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Role> lookup(String preset, Object[] objs) throws ServiceException {
         try {
             return PagingUtil.pagedData(roleDao.lookup(preset, objs));
@@ -226,7 +226,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Role> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         try {
             return PagingUtil.pagedData(pagingInfo, roleDao.lookupCount(preset, objs), roleDao.lookup(preset, objs, pagingInfo));
@@ -237,7 +237,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void addUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException {
         try {
             userPermissionCache.clear();
@@ -249,7 +249,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteUserRelation(StringIdKey roleIdKey, StringIdKey userIdKey) throws ServiceException {
         try {
             userPermissionCache.clear();
@@ -261,7 +261,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchAddUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
         try {
             userPermissionCache.clear();
@@ -273,7 +273,7 @@ public class RoleMaintainServiceImpl implements RoleMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchDeleteUserRelations(StringIdKey roleIdKey, List<StringIdKey> userIdKeys) throws ServiceException {
         try {
             userPermissionCache.clear();

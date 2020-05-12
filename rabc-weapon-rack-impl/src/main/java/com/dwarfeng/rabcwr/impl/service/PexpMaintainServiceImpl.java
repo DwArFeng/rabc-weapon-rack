@@ -45,7 +45,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(LongIdKey key) throws ServiceException {
         try {
             return internalExists(key);
@@ -60,7 +60,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Pexp get(LongIdKey key) throws ServiceException {
         try {
             return internalGet(key);
@@ -84,7 +84,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insert(Pexp permission) throws ServiceException {
         try {
             return internalInsert(permission);
@@ -110,7 +110,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(Pexp permission) throws ServiceException {
         try {
             internalUpdate(permission);
@@ -132,7 +132,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(LongIdKey key) throws ServiceException {
         try {
             internalDelete(key);
@@ -154,7 +154,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public Pexp getIfExists(LongIdKey key) throws ServiceException {
         try {
             return internalExists(key) ? internalGet(key) : null;
@@ -165,7 +165,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insertIfNotExists(Pexp pexp) throws ServiceException {
         try {
             if (Objects.isNull(pexp.getKey()) || !internalExists(pexp.getKey())) {
@@ -179,7 +179,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(Pexp pexp) throws ServiceException {
         try {
             if (internalExists(pexp.getKey())) {
@@ -192,7 +192,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(LongIdKey key) throws ServiceException {
         try {
             if (internalExists(key)) {
@@ -205,7 +205,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager")
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insertOrUpdate(Pexp pexp) throws ServiceException {
         try {
             if (internalExists(pexp.getKey())) {
@@ -221,7 +221,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Pexp> lookup(String preset, Object[] objs) throws ServiceException {
         try {
             return PagingUtil.pagedData(permissionDao.lookup(preset, objs));
@@ -232,7 +232,7 @@ public class PexpMaintainServiceImpl implements PexpMaintainService {
 
     @Override
     @BehaviorAnalyse
-    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<Pexp> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         try {
             return PagingUtil.pagedData(pagingInfo, permissionDao.lookupCount(preset, objs), permissionDao.lookup(preset, objs, pagingInfo));
